@@ -14,6 +14,8 @@ Un torneo cuenta con los siguientes atributos:
 - Máximo asistidor
 - Se requiere el uso de constructores para la recepción de parámetros, la carga de equipos y la inicialización de datos.
 
+
+
 ⚽ Equipos
 Cada equipo tiene los siguientes atributos:
 
@@ -21,6 +23,8 @@ Cada equipo tiene los siguientes atributos:
 -Lista de jugadores
 -Goles marcados
 -Goles recibidos
+
+
 
 👥 Jugadores
 Cada jugador posee las siguientes características:
@@ -30,6 +34,8 @@ Cada jugador posee las siguientes características:
 -Rol (titular o suplente)
 -Cantidad de goles anotados
 -Cantidad de asistencias realizadas
+
+
 
 🔧 Funcionalidades
 El programa debe incluir los siguientes métodos:
@@ -55,6 +61,8 @@ El programa debe incluir los siguientes métodos:
 -Agregar un jugador a un equipo → Permite incorporar un nuevo jugador a un equipo existente.
 
 -Eliminar un jugador de un equipo → Permite eliminar un jugador de un equipo.
+
+
 
 📝 Clase de Prueba
 Se debe crear una clase con un método main que:
