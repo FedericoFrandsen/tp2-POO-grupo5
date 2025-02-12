@@ -1,12 +1,19 @@
+/**
+ * Clase que representa un partido entre dos equipos, guarda la siguiente información:
+ *  Los equipos que participan y los goles realizados en el partido.
+ *  ¿El ganador del partido?
+ *
+ */
 public class Partido {
-    private Equipo equipo1;
-    private Equipo equipo2;
+    private final Equipo equipoLocal;
+    private final Equipo equipoVisitante;
     private Gol[] goles;
     private int numGoles;
 
-    public Partido(Equipo equipo1, Equipo equipo2) {
-        this.equipo1 = equipo1;
-        this.equipo2 = equipo2;
+
+    public Partido(Equipo equipoLocal, Equipo equipoVisitante) {
+        this.equipoLocal = equipoLocal;
+        this.equipoVisitante = equipoVisitante;
         this.goles = new Gol[20]; // Suponiendo un máximo de 20 goles por partido
         this.numGoles = 0;
     }
@@ -17,13 +24,17 @@ public class Partido {
         }
     }
 
-
-    public Equipo getEquipo1() {
-        return equipo1;
+    public Gol[] getGoles() {
+        return goles;
     }
 
-    public Equipo getEquipo2() {
-        return equipo2;
+
+    public Equipo getEquipoLocal() {
+        return equipoLocal;
+    }
+
+    public Equipo getEquipoVisitante() {
+        return equipoVisitante;
     }
 }
 
