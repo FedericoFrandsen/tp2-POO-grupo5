@@ -2,6 +2,14 @@ public class Torneo {
     private String nombre;
     private Equipo[] equipos;
     private Partido[] partidos;
+    // Los partidos tendrían que tener una estructura algo asi:
+    //  Partido 1: Equipo 1 vs. Equipo 2
+    //  Partido 2: Equipo 3 vs. Equipo 4
+    //  Partido 3: Equipo 5 vs. Equipo 6
+    //  Partido 4: Equipo 7 vs. Equipo 8
+    //      Partido 5: Ganador 1 vs. Ganador 2
+    //      Partido 6: Ganador 3 vs. Ganador 4
+    //          Partido 7: Ganador 5 vs. Ganador 6
     private int numEquipos;
     private int numPartidos;
     private Jugador maximoGoleador;
@@ -47,7 +55,7 @@ public class Torneo {
     }
 
     public void finalizarPartido(Partido partido, Equipo ganador) {
-        eliminarEquipo(partido.getEquipo1().equals(ganador) ? partido.getEquipo2() : partido.getEquipo1());
+        eliminarEquipo(partido.getEquipoLocal().equals(ganador) ? partido.getEquipoVisitante() : partido.getEquipoLocal());
         if (numEquipos > 1) {
             sortearEnfrentamientos();
         }
