@@ -1,32 +1,16 @@
-public class Jugador {
-    private String nombre;
-    private String apellido;
-    private int edad;
+public class Jugador extends Persona {
     private boolean esTitular;
     private int goles;
     private int asistencias;
 
-    public Jugador(String nombre, String apellido, int edad, boolean esTitular) {
-        this.nombre = nombre;
-        this.apellido = apellido;
-        this.edad = edad;
+    public Jugador(String nombre, String apellido, int edad, boolean esTitular, int goles, int asistencias) {
+       super(nombre, apellido, edad);
         this.esTitular = esTitular;
         this.goles = 0;
         this.asistencias = 0;
     }
 
     // Getters y Setters
-    public String getNombre() {
-        return nombre;
-    }
-
-    public String getApellido() {
-        return apellido;
-    }
-
-    public int getEdad() {
-        return edad;
-    }
 
     public boolean isEsTitular() {
         return esTitular;

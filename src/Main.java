@@ -5,20 +5,20 @@ public class Main {
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 
         Equipo equipo1 = new Equipo("Equipo 1");
-        equipo1.agregarJugador(new Jugador("Juan", "Perez", 25, true));
-        equipo1.agregarJugador(new Jugador("Carlos", "Gomez", 22, true));
+        equipo1.agregarJugador(new Jugador("Juan", "Perez", 25, true, 5, 3));
+        equipo1.agregarJugador(new Jugador("Carlos", "Gomez", 22, true, 3, 2));
 
         Equipo equipo2 = new Equipo("Equipo 2");
-        equipo2.agregarJugador(new Jugador("Luis", "Martinez", 28, true));
-        equipo2.agregarJugador(new Jugador("Pedro", "Lopez", 24, true));
+        equipo2.agregarJugador(new Jugador("Luis", "Martinez", 28, true, 4, 4));
+        equipo2.agregarJugador(new Jugador("Pedro", "Lopez", 24, true, 2, 1));
 
         Equipo equipo3 = new Equipo("Equipo 3");
-        equipo3.agregarJugador(new Jugador("Miguel", "Sanchez", 30, true));
-        equipo3.agregarJugador(new Jugador("Jorge", "Ramirez", 27, true));
+        equipo3.agregarJugador(new Jugador("Miguel", "Sanchez", 30, true, 6, 5));
+        equipo3.agregarJugador(new Jugador("Jorge", "Ramirez", 27, true, 3, 2));
 
         Equipo equipo4 = new Equipo("Equipo 4");
-        equipo4.agregarJugador(new Jugador("Roberto", "Diaz", 26, true));
-        equipo4.agregarJugador(new Jugador("Fernando", "Gonzalez", 23, true));
+        equipo4.agregarJugador(new Jugador("Roberto", "Diaz", 26, true, 4, 3));
+        equipo4.agregarJugador(new Jugador("Fernando", "Gonzalez", 23, true, 2, 1));
 
         torneo.agregarEquipo(equipo1);
         torneo.agregarEquipo(equipo2);
