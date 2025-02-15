@@ -50,10 +50,15 @@ public class OrganizadorDePartidos {
 
     }
 
+    public boolean hayPartidosPendientes() {
+
+        return !this.partidosPendientes.isEmpty() || this.equiposParaSortear.size() > 1 ;
+    }
+
     /**
      * Inicia el siguiente partido disponible.
      */
-    public void iniciarSiguientePartido() {
+    public Partido iniciarSiguientePartido() {
 
         //  Si hay un partido en curso, no se puede iniciar otro.
         if (this.partidoActual != null) {
@@ -69,7 +74,7 @@ public class OrganizadorDePartidos {
                 if (this.equiposParaSortear.isEmpty()) {
                     throw new RuntimeException("Por alguna razon los equipos estan vacios, esto no deberia pasar.");
                 } else if (this.equiposParaSortear.size() == 1) {
-                    System.out.println("El equipo ganador es: " + this.equiposParaSortear.getFirst().getNombre());
+                    System.out.println("El equipo ganador del Torneo es: " + this.equiposParaSortear.getFirst().getNombre());
                     break;
                 }
 
@@ -78,6 +83,8 @@ public class OrganizadorDePartidos {
                 this.partidoActual = partidosPendientes.removeFirst();
             }
         } while (this.partidoActual == null);
+
+        return partidoActual;
 
     }
 
@@ -93,6 +100,18 @@ public class OrganizadorDePartidos {
 
     public Partido getPartidoActual() {
         return partidoActual;
+    }
+
+    public ArrayList<Partido> getPartidosPendientes() {
+        return partidosPendientes;
+    }
+
+    public ArrayList<Partido> getPartidosJugados() {
+        return partidosJugados;
+    }
+
+    public ArrayList<Equipo> getEquiposParaSortear() {
+        return equiposParaSortear;
     }
 
     /**

@@ -18,7 +18,7 @@ public class Torneo {
     }
 
     public void iniciarTorneo() {
-        if (this.equipos.size() == 8 || this.equipos.size() == 16) {
+        if (equipos.size() == 4 || equipos.size() == 8 || equipos.size() == 16) {
             organizadorDePartidos.setEquiposParaSortear(equipos);
 
         } else {

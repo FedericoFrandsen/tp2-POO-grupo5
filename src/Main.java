@@ -1,3 +1,4 @@
+import javax.xml.transform.Source;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
@@ -27,23 +28,43 @@ public class Main {
         torneo.agregarEquipo(equipo3);
         torneo.agregarEquipo(equipo4);
 
-        torneo.sortearEnfrentamientos();
+        torneo.iniciarTorneo();
 
-        int maxPartidos=7;
+        int maxPartidos = (torneo.getNumEquipos() * 2) - 1;
 
-        for (int i = 0; i < maxPartidos && torneo.getNumEquipos() > 1; i++) {
-            Partido partido = torneo.getPartidos().get(i);
-            System.out.println("Partido " + (i + 1) + ": " + partido.getEquipoLocal().getNombre() + " vs. " + partido.getEquipoVisitante().getNombre());
+        OrganizadorDePartidos organizadorDePartidos = torneo.getOrganizadorDePartidos();
+
+        organizadorDePartidos.sortearEnfrentamientos();
+
+        boolean hayPartidosPendientes = organizadorDePartidos.hayPartidosPendientes();
+        System.out.println("Hay partidos pendientes: " + hayPartidosPendientes);
+        while (organizadorDePartidos.hayPartidosPendientes()) {
+
+
+            System.out.println("Partidos Pendientes:");
+            System.out.println( organizadorDePartidos.getPartidosPendientes());
+            System.out.println("Partidos Jugados:");
+            System.out.println( organizadorDePartidos.getPartidosJugados());
+            System.out.println("Equipos para sortear:");
+            System.out.println( organizadorDePartidos.getEquiposParaSortear());
+
+            Partido partido = organizadorDePartidos.iniciarSiguientePartido();
+
+
+
+
+            System.out.println("Partido " + (organizadorDePartidos.getPartidosJugados().size() + 1) + ": " + partido.getEquipoLocal().getNombre() + " vs. " + partido.getEquipoVisitante().getNombre());
             partido.agregarGolLocal(partido.getEquipoLocal().getJugadores().get(0), partido.getEquipoLocal().getJugadores().get(1));
             partido.agregarGolVisitante(partido.getEquipoVisitante().getJugadores().get(0), partido.getEquipoVisitante().getJugadores().get(1));
             System.out.println("Goles del equipo local: " + partido.getGolesLocal().size());
             System.out.println("Goles del equipo visitante: " + partido.getGolesVisitante().size());
             System.out.println("Ganador: " + partido.determinarGanador().getNombre());
             System.out.println();
-            torneo.finalizarPartido(partido, partido.determinarGanador());
+            organizadorDePartidos.finalizarPartidoActual( partido.determinarGanador());
         }
+
     }
-        public static void ingresarJugadores(Equipo equipo) {
+    public static void ingresarJugadores(Equipo equipo) {
             Scanner scanner = new Scanner(System.in);
 
             System.out.println("¿Cuántos jugadores deseas agregar?");
