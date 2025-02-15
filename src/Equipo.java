@@ -4,25 +4,61 @@ import java.util.List;
 public class Equipo {
     private String nombre;
     private List<Jugador> jugadores;
-    private int numJugadores;
+
     private int golesMarcados;
     private int golesRecibidos;
 
     public Equipo(String nombre) {
         this.nombre = nombre;
         this.jugadores = new ArrayList<>();
-        this.numJugadores = 0;
         this.golesMarcados = 0;
         this.golesRecibidos = 0;
     }
 
-    public void agregarJugador(Jugador jugador) {
-        jugadores.add(jugador);
+    /**
+     * Devuelve un objeto Equipo a partir de un String con un formato especifico [nombreDelAtributo]:[valorDelAtributo];
+     *     Para el equipo seria algo asi:
+     *     nombre:Equipo 1;golesMarcados:7;golesRecibidos:1
+     * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir
+     */
+    public static Equipo fromString(String equipoString) {
+
+
+        String[] atributos = equipoString.split(";");
+        Equipo equipo = new Equipo("Nombre por default, nunca deberia figurar");
+        for (String atributo : atributos) {
+            String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
+            String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
+
+            switch (nombreDelAtributo) {
+                case "nombre" -> equipo = new Equipo(valorDelAtributo);
+                case "golesMarcados" -> equipo.setGolesMarcados(Integer.parseInt(valorDelAtributo));
+                case "golesRecibidos" -> equipo.setGolesRecibidos(Integer.parseInt(valorDelAtributo));
+            }
+
         }
 
 
-public void eliminarJugador(Jugador jugador) {
-    jugadores.remove(jugador);
+        return equipo;
+    }
+
+    /**
+     * Devuelve una representación en String del objeto Equipo
+     * Este metodo lo llama automáticamente el System.out.println, y sobrescribiéndolo se puede modificar como se muestra por consola el equipo.
+     * @return String
+     */
+    @Override
+    public String toString() {
+        return "nombre(String):" + this.nombre + ";golesMarcados(int):" + this.golesMarcados + ";golesRecibidos(int):" + this.golesRecibidos;
+    }
+
+    public void agregarJugador(Jugador jugador) {
+        jugadores.add(jugador);
+    }
+
+
+    public void eliminarJugador(Jugador jugador) {
+        jugadores.remove(jugador);
 
     }
 
@@ -38,7 +74,7 @@ public void eliminarJugador(Jugador jugador) {
         return nombre;
     }
 
-    public List <Jugador> getJugadores() {
+    public List<Jugador> getJugadores() {
         return jugadores;
     }
 

@@ -1,10 +1,14 @@
 import javax.xml.transform.Source;
+import java.io.*;
+import java.util.Iterator;
 import java.util.Scanner;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
+        pruebasDeArchivos();
+
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 
         Equipo equipo1 = new Equipo("Equipo 1");
@@ -37,33 +41,70 @@ public class Main {
         organizadorDePartidos.sortearEnfrentamientos();
 
         boolean hayPartidosPendientes = organizadorDePartidos.hayPartidosPendientes();
-        System.out.println("Hay partidos pendientes: " + hayPartidosPendientes);
-        while (organizadorDePartidos.hayPartidosPendientes()) {
 
+//        System.out.println("Hay partidos pendientes: " + hayPartidosPendientes);
 
-            System.out.println("Partidos Pendientes:");
-            System.out.println( organizadorDePartidos.getPartidosPendientes());
-            System.out.println("Partidos Jugados:");
-            System.out.println( organizadorDePartidos.getPartidosJugados());
-            System.out.println("Equipos para sortear:");
-            System.out.println( organizadorDePartidos.getEquiposParaSortear());
-
-            Partido partido = organizadorDePartidos.iniciarSiguientePartido();
-
-
-
-
-            System.out.println("Partido " + (organizadorDePartidos.getPartidosJugados().size() + 1) + ": " + partido.getEquipoLocal().getNombre() + " vs. " + partido.getEquipoVisitante().getNombre());
-            partido.agregarGolLocal(partido.getEquipoLocal().getJugadores().get(0), partido.getEquipoLocal().getJugadores().get(1));
-            partido.agregarGolVisitante(partido.getEquipoVisitante().getJugadores().get(0), partido.getEquipoVisitante().getJugadores().get(1));
-            System.out.println("Goles del equipo local: " + partido.getGolesLocal().size());
-            System.out.println("Goles del equipo visitante: " + partido.getGolesVisitante().size());
-            System.out.println("Ganador: " + partido.determinarGanador().getNombre());
-            System.out.println();
-            organizadorDePartidos.finalizarPartidoActual( partido.determinarGanador());
-        }
-
+//        while (organizadorDePartidos.hayPartidosPendientes()) {
+//
+//
+//            System.out.println("Partidos Pendientes:");
+//            System.out.println( organizadorDePartidos.getPartidosPendientes());
+//            System.out.println("Partidos Jugados:");
+//            System.out.println( organizadorDePartidos.getPartidosJugados());
+//            System.out.println("Equipos para sortear:");
+//            System.out.println( organizadorDePartidos.getEquiposParaSortear());
+//
+//            Partido partido = organizadorDePartidos.iniciarSiguientePartido();
+//
+//
+//
+//
+//            System.out.println("Partido " + (organizadorDePartidos.getPartidosJugados().size() + 1) + ": " + partido.getEquipoLocal().getNombre() + " vs. " + partido.getEquipoVisitante().getNombre());
+//            partido.agregarGolLocal(partido.getEquipoLocal().getJugadores().get(0), partido.getEquipoLocal().getJugadores().get(1));
+//            partido.agregarGolVisitante(partido.getEquipoVisitante().getJugadores().get(0), partido.getEquipoVisitante().getJugadores().get(1));
+//            System.out.println("Goles del equipo local: " + partido.getGolesLocal().size());
+//            System.out.println("Goles del equipo visitante: " + partido.getGolesVisitante().size());
+//            System.out.println("Ganador: " + partido.determinarGanador().getNombre());
+//            System.out.println();
+//            organizadorDePartidos.finalizarPartidoActual( partido.determinarGanador());
+//        }
     }
+
+    public static void pruebasDeArchivos() {
+        File archivo = new File("./equipos.txt");
+
+        if (archivo.exists()) {
+            try (BufferedReader fileReader = new BufferedReader(new FileReader(archivo))) {
+
+                for (Iterator<String> it = fileReader.lines().iterator(); it.hasNext(); ) {
+                    String line = it.next();
+
+
+
+                    Equipo equipo = Equipo.fromString(line);
+
+                    System.out.println(equipo);
+
+                }
+
+
+
+
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+
+        } else {
+            try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(archivo))) {
+                fileWriter.write("nombre(String):Equipo 1;golesMarcados(int):7;golesRecibidos(int):1");
+                fileWriter.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            System.out.println("El archivo no existe");
+        }
+    }
+
     public static void ingresarJugadores(Equipo equipo) {
             Scanner scanner = new Scanner(System.in);
 
@@ -78,6 +119,7 @@ public class Main {
                 String apellido = scanner.nextLine();
                 System.out.println("Ingrese la edad del jugador:");
                 int edad = scanner.nextInt();
+                //  Yo no pondria lo de es titular, me parece medio al pedo, pero bueno.
                 System.out.println("¿Es titular? (true/false):");
                 boolean esTitular = scanner.nextBoolean();
                 scanner.nextLine(); // Consumir la nueva línea
