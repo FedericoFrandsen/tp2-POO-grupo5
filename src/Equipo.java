@@ -3,21 +3,18 @@ import java.util.List;
 
 public class Equipo {
     private String nombre;
-    private List<Jugador> jugadores;
+    private List<Jugador> jugadores = new ArrayList<>();
 
-    private int golesMarcados;
-    private int golesRecibidos;
+    private int golesMarcados = 0;
+    private int golesRecibidos = 0;
 
     public Equipo(String nombre) {
         this.nombre = nombre;
-        this.jugadores = new ArrayList<>();
-        this.golesMarcados = 0;
-        this.golesRecibidos = 0;
     }
 
     /**
-     * Devuelve un objeto Equipo a partir de un String con un formato especifico [nombreDelAtributo]:[valorDelAtributo];
-     *     Para el equipo seria algo asi:
+     * Devuelve un objeto Equipo a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
+     *     Para el equipo sería algo asi:
      *     nombre:Equipo 1;golesMarcados:7;golesRecibidos:1
      * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir
      */
@@ -49,7 +46,7 @@ public class Equipo {
      */
     @Override
     public String toString() {
-        return "nombre(String):" + this.nombre + ";golesMarcados(int):" + this.golesMarcados + ";golesRecibidos(int):" + this.golesRecibidos;
+        return "nombre:" + this.nombre + ";golesMarcados:" + this.golesMarcados + ";golesRecibidos:" + this.golesRecibidos;
     }
 
     public void agregarJugador(Jugador jugador) {
