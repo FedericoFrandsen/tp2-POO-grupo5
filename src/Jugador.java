@@ -10,6 +10,14 @@ public class Jugador extends Persona {
         this.asistencias = 0;
     }
 
+    public void incrementarGoles() {
+        this.goles++;
+    }
+
+    public void incrementarAsistencias() {
+        this.asistencias++;
+    }
+
     // Getters y Setters
 
     public boolean isEsTitular() {

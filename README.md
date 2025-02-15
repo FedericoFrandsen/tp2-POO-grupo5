@@ -1,4 +1,4 @@
-Simulador de Torneo de Fútbol 5
+Administrador de Torneo de Fútbol 5
 
 Este proyecto consiste en el desarrollo de un programa que modela la estructura y los resultados de un torneo de fútbol 5, siguiendo las siguientes especificaciones.
 

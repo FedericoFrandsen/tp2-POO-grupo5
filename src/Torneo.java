@@ -1,7 +1,10 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Torneo {
     private String nombre;
-    private Equipo[] equipos;
-    private Partido[] partidos;
+    private List<Equipo> equipos;
+    private List<Partido> partidos;
     // Los partidos tendrían que tener una estructura algo asi:
     //  Partido 1: Equipo 1 vs. Equipo 2
     //  Partido 2: Equipo 3 vs. Equipo 4
@@ -17,46 +20,33 @@ public class Torneo {
 
     public Torneo(String nombre) {
         this.nombre = nombre;
-        this.equipos = new Equipo[10]; // Suponiendo un máximo de 10 equipos por torneo
-        this.partidos = new Partido[10]; // Suponiendo un máximo de 10 partidos por torneo
+        this.equipos = new ArrayList<>();
+        this.partidos = new ArrayList<>();
         this.numEquipos = 0;
         this.numPartidos = 0;
     }
 
     public void agregarEquipo(Equipo equipo) {
-        if (numEquipos < equipos.length) {
-            equipos[numEquipos++] = equipo;
-        }
+        equipos.add(equipo);
+
     }
 
     public void eliminarEquipo(Equipo equipo) {
-        for (int i = 0; i < numEquipos; i++) {
-            if (equipos[i].equals(equipo)) {
-                equipos[i] = equipos[--numEquipos];
-                equipos[numEquipos] = null;
-                break;
-            }
-        }
+        equipos.remove(equipo);
     }
 
     public void sortearEnfrentamientos() {
-        numPartidos = 0;
-        for (int i = 0; i < numEquipos; i += 2) {
-            if (i + 1 < numEquipos) {
-                partidos[numPartidos++] = new Partido(equipos[i], equipos[i + 1]);
+        partidos.clear();
+        for (int i = 0; i < equipos.size(); i += 2) {  // tendriamos que poner para que se random, porque por lo que veo se enfrentan en orden de ingreso
+            if (i + 1 < equipos.size()) {
+                partidos.add(new Partido(equipos.get(i), equipos.get(i + 1)));
             }
         }
-    }
-
-    public void ingresarGoles(Partido partido, Jugador goleador, Jugador asistidor) {
-        goleador.setGoles(goleador.getGoles() + 1);
-        asistidor.setAsistencias(asistidor.getAsistencias() + 1);
-        partido.agregarGol(goleador, asistidor);
     }
 
     public void finalizarPartido(Partido partido, Equipo ganador) {
         eliminarEquipo(partido.getEquipoLocal().equals(ganador) ? partido.getEquipoVisitante() : partido.getEquipoLocal());
-        if (numEquipos > 1) {
+        if (equipos.size() > 1) {
             sortearEnfrentamientos();
         }
     }
@@ -72,17 +62,21 @@ public class Torneo {
     }
 
     public Equipo obtenerEquipoCampeon() {
-        if (numEquipos == 1) {
-            return equipos[0];
+        if (equipos.size() == 1) {
+            return equipos.get(0);
         }
         return null;
     }
-    public Partido[] getPartidos() {
+    public List<Partido> getPartidos() {
         return partidos;
     }
 
     public String getNombre() {
         return nombre;
+    }
+
+    public int getNumEquipos() {
+        return equipos.size();
     }
 }
 
