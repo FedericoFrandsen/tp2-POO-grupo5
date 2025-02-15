@@ -24,9 +24,13 @@ public class Partido {
 
     public void agregarGolLocal(Jugador goleador, Jugador asistidor) {
         golesLocal.add(new Gol(goleador, asistidor));
+        goleador.incrementarGoles();
+        asistidor.incrementarAsistencias();
         }
     public void agregarGolVisitante(Jugador goleador, Jugador asistidor) {
         golesVisitante.add(new Gol(goleador, asistidor));
+        goleador.incrementarGoles();
+        asistidor.incrementarAsistencias();
     }
 
     public List<Gol> getGolesLocal() {return golesLocal;}
@@ -39,6 +43,7 @@ public class Partido {
     public Equipo getEquipoVisitante() {
         return equipoVisitante;
     }
+
 
     /**
      * Método que determina el ganador del partido
