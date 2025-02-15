@@ -37,7 +37,7 @@ public class Torneo {
 
     public void sortearEnfrentamientos() {
         partidos.clear();
-        for (int i = 0; i < equipos.size(); i += 2) {
+        for (int i = 0; i < equipos.size(); i += 2) {  // tendriamos que poner para que se random, porque por lo que veo se enfrentan en orden de ingreso
             if (i + 1 < equipos.size()) {
                 partidos.add(new Partido(equipos.get(i), equipos.get(i + 1)));
             }
