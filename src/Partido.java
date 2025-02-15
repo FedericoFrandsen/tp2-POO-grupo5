@@ -44,7 +44,6 @@ public class Partido {
         return equipoVisitante;
     }
 
-
     /**
      * Método que determina el ganador del partido
      * @return el equipo ganador del partido
