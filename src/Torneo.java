@@ -48,12 +48,6 @@ public class Torneo {
         }
     }
 
-    public void ingresarGoles(Partido partido, Jugador goleador, Jugador asistidor) {
-        goleador.setGoles(goleador.getGoles() + 1);
-        asistidor.setAsistencias(asistidor.getAsistencias() + 1);
-        partido.agregarGol(goleador, asistidor);
-    }
-
     public void finalizarPartido(Partido partido, Equipo ganador) {
         eliminarEquipo(partido.getEquipoLocal().equals(ganador) ? partido.getEquipoVisitante() : partido.getEquipoLocal());
         if (numEquipos > 1) {

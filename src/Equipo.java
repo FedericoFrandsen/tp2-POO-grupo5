@@ -37,9 +37,12 @@ public class Equipo {
         return formacion.toString();
     }
 
-
     public String getNombre() {
         return nombre;
+    }
+
+    public Jugador[] getJugadores() {
+        return jugadores;
     }
 
     public int getGolesMarcados() {
@@ -57,4 +60,6 @@ public class Equipo {
     public void setGolesRecibidos(int golesRecibidos) {
         this.golesRecibidos = golesRecibidos;
     }
+
+
 }
