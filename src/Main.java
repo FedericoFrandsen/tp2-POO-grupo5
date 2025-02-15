@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
@@ -27,12 +29,45 @@ public class Main {
 
         torneo.sortearEnfrentamientos();
 
-        // Simulación de partidos y demás lógica del torneo
-        // Ejemplo de finalizar un partido
-        Partido partido = torneo.getPartidos()[0];
-        torneo.finalizarPartido(partido, equipo1); // Suponiendo que equipo1 ganó el partido
+        int maxPartidos=7;
 
-        // Continuar con la lógica del torneo hasta que haya un campeón
-    }
+        for (int i = 0; i < maxPartidos && torneo.getNumEquipos() > 1; i++) {
+            Partido partido = torneo.getPartidos().get(i);
+            System.out.println("Partido " + (i + 1) + ": " + partido.getEquipoLocal().getNombre() + " vs. " + partido.getEquipoVisitante().getNombre());
+            partido.agregarGolLocal(partido.getEquipoLocal().getJugadores().get(0), partido.getEquipoLocal().getJugadores().get(1));
+            partido.agregarGolVisitante(partido.getEquipoVisitante().getJugadores().get(0), partido.getEquipoVisitante().getJugadores().get(1));
+            System.out.println("Goles del equipo local: " + partido.getGolesLocal().size());
+            System.out.println("Goles del equipo visitante: " + partido.getGolesVisitante().size());
+            System.out.println("Ganador: " + partido.determinarGanador().getNombre());
+            System.out.println();
+            torneo.finalizarPartido(partido, partido.determinarGanador());
         }
+    }
+        public static void ingresarJugadores(Equipo equipo) {
+            Scanner scanner = new Scanner(System.in);
+
+            System.out.println("¿Cuántos jugadores deseas agregar?");
+            int numJugadores = scanner.nextInt();
+            scanner.nextLine(); // Consumir la nueva línea
+
+            for (int i = 0; i < numJugadores; i++) {
+                System.out.println("Ingrese el nombre del jugador:");
+                String nombre = scanner.nextLine();
+                System.out.println("Ingrese el apellido del jugador:");
+                String apellido = scanner.nextLine();
+                System.out.println("Ingrese la edad del jugador:");
+                int edad = scanner.nextInt();
+                System.out.println("¿Es titular? (true/false):");
+                boolean esTitular = scanner.nextBoolean();
+                scanner.nextLine(); // Consumir la nueva línea
+
+                Jugador jugador = new Jugador(nombre, apellido, edad, esTitular, 0, 0);
+                equipo.agregarJugador(jugador);
+            }
+
+            System.out.println("Jugadores agregados:");
+            System.out.println(equipo.formacion());
+        }
+    }
+
 

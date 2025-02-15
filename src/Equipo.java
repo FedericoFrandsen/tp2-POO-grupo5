@@ -21,7 +21,6 @@ public class Equipo {
         }
 
 
-
 public void eliminarJugador(Jugador jugador) {
     jugadores.remove(jugador);
 
