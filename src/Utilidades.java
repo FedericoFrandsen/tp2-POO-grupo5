@@ -9,14 +9,16 @@ public class Utilidades {
     private static final Random random = new Random();
 
     /**
-     * Genera un ID único para un objeto dentro de la lista pasada como argumento
+     * Genera un ID único para un objeto dentro de la lista pasada como parametro
      *
      * @param lista Lista de objetos que implementan la interfaz `ConId`
      * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
-     * @return int: id no repetido en la lista pasada como argumento.
+     * @return int: ID no repetido en la lista pasada como argumento.
      */
     public static <T extends ConId> int generarIdUnicaEn(ArrayList<T> lista) {
-
+        // T es un parametro generico de Tipo, es decir establece condiciones para el tipo de dato que se puede recibir,
+        // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz ConId. Y como el parametro que pedimos es un
+        // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente ConId.
         do {
             int newId = random.nextInt(1000);
             // revisamos que ninguno de los objetos presentes en la lista tenga el ID creado.
@@ -27,7 +29,7 @@ public class Utilidades {
     }
 
     /**
-     * Escribe un archivo con el contenido pasado como argumento. (Siempre sobreescribe el contenido anterior)
+     * Escribe un archivo con el contenido pasado como parametro. (Siempre sobreescribe el contenido anterior)
      * @param direccionArchivo path al archivo
      * @param contenido string a escribir en el archivo
      * @throws RuntimeException en caso de que haya un error al escribir el archivo.

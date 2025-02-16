@@ -1,10 +1,11 @@
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 public class Equipo implements ConId {
     private String nombre;
-    private List<Jugador> jugadores = new ArrayList<>();
+    private ArrayList<Jugador> jugadores = new ArrayList<>();
     private int id;
     private int golesMarcados = 0;
     private int golesRecibidos = 0;
@@ -18,7 +19,7 @@ public class Equipo implements ConId {
      * Devuelve un objeto Equipo a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
      *     Para el equipo sería algo asi:
      *     nombre:Equipo 1;golesMarcados:7;golesRecibidos:1
-     * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir
+     * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir los datos en Equipos.
      */
     public static Equipo fromString(String equipoString) {
 

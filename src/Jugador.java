@@ -16,7 +16,7 @@ public class Jugador extends Persona {
      * Devuelve un objeto Jugador a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
      *     Para el equipo sería algo asi:
      *     nombre:Lionel;apellido:Messi;edad:33;goles:198;asistencias:100
-     * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir
+     * Este metodo lo usamos para convertir un string en un objeto Jugador, por ejemplo cuando leemos un archivo y queremos convertir los datos en Jugadores.
      */
     public static Jugador fromString(String jugadorString) {
         String[] atributos = jugadorString.split(";");

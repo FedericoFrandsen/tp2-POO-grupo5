@@ -25,7 +25,7 @@ public class OrganizadorDePartidos {
     /**
      * Método que se encarga de distribuir los equipos disponibles en partidos.
      */
-    public void sortearEnfrentamientos() {
+    public void sortearEnfrentamientos() throws RuntimeException {
         // Implementación para sortear los enfrentamientos
 
         if (this.equiposParaSortear == null) {
@@ -57,8 +57,10 @@ public class OrganizadorDePartidos {
 
     /**
      * Inicia el siguiente partido disponible.
+     * @return Partido que se va a jugar.
+     * @throws RuntimeException si hay un partido en curso o no hay equipos para sortear .
      */
-    public Partido iniciarSiguientePartido() {
+    public Partido iniciarSiguientePartido() throws RuntimeException {
 
         //  Si hay un partido en curso, no se puede iniciar otro.
         if (this.partidoActual != null) {
