@@ -47,15 +47,8 @@ public class Main {
                     ingresarJugadores(equipos.getFirst());
                     break;
                 case 4:
-                    crearTorneo();
-                    break;
+                    crearTorneo(); // falta implementar la cargar de resultados
                 case 5:
-                    iniciarTorneo();
-                    break;
-                case 6:
-                    cargaDeResultados();
-                    break;
-                case 7:
                     exit = true;
                     break;
                 default:
@@ -63,14 +56,6 @@ public class Main {
             }
         }
     }
-
-    private static void cargaDeResultados() {
-    }
-
-    private static void iniciarTorneo() {
-
-    }
-
     private static void crearTorneo() {
             Scanner scanner = new Scanner(System.in);
             System.out.println("Ingrese el nombre del torneo:");
@@ -116,14 +101,6 @@ public class Main {
             for (Equipo equipo : torneo.getEquipos()) {
                 System.out.println(equipo.getNombre());
             }
-
-       /* Escribir datos en el archivo??
-           try (BufferedWriter writer = new BufferedWriter(new FileWriter("./torneos.txt", true))) {
-                writer.write(torneo.toFileString());
-                writer.newLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
         }
 
 
