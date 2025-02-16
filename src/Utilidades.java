@@ -51,7 +51,6 @@ public class Utilidades {
      */
     public static Stream<String> leerArchivo(String direccionArchivo) throws RuntimeException {
         File archivo = new File(direccionArchivo);
-        StringBuilder contenido = new StringBuilder();
 
         if (archivo.exists()) {
             try (BufferedReader fileReader = new BufferedReader(new FileReader(archivo))) {
