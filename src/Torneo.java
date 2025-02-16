@@ -28,8 +28,10 @@ public class Torneo {
 
     public void iniciarTorneo() throws RuntimeException {
         if (equipos.size() == 8) {
-            // estoy casi seguro que vamos a tener un problema con el tema de referencias de listas, pero ya veremos.
-            organizadorDePartidos.setEquiposParaSortear(equipos);
+            // aca hacemos una copia de la lista porque el organizador de partidos la va a modificar
+            // y no queremos que se modifique la lista original
+            // el (ArrayList<Equipo>) es un cast, porque el metodo .clone() devuelve un tipo Object
+            organizadorDePartidos.setEquiposParaSortear((ArrayList<Equipo>) equipos.clone());
 
         } else {
             throw new RuntimeException("El torneo no puede iniciar, se necesitan 8 equipos");
