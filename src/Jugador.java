@@ -20,6 +20,7 @@ public class Jugador extends Persona implements TieneId {
         return id;
     }
 
+
     /**
      * Devuelve un objeto Jugador a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
      *     Para el equipo sería algo asi:
