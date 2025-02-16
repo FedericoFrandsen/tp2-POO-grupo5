@@ -73,20 +73,66 @@ public class Main {
                     break;
                 case 2:
                     System.out.println("1. Ver equipos");
-                    System.out.println("2. Crear equipo");
+                    System.out.println("2. Agregar equipo");
                     System.out.println("3. Modificar Equipo");
-                    crearEquipo(scanner);
+                    int equipoOption = scanner.nextInt();
+
+                    switch (equipoOption) {
+                        case 1:
+                            System.out.println("Equipos:");
+                            for (Equipo equipo : equipos) {
+                                System.out.println(equipo.formacion());
+                            }
+                            break;
+                        case 2:
+                            crearEquipo(scanner);
+                            break;
+                        case 3:
+                            System.out.println("Ingrese el ID del equipo que desea modificar:");
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Intente de nuevo.");
+                            break;
+                    }
                     break;
                 case 3:
                     System.out.println("1. Ver jugadores");
-                    System.out.println("2. Crear jugador");
+                    System.out.println("2. Agregar jugador");
+
+                    int jugadorOption = scanner.nextInt();
+
+                    switch (jugadorOption) {
+                        case 1:
+                            System.out.println("Jugadores:");
+                            for (Jugador jugador : jugadores) {
+                                String jugadorStringBuilder = jugador.getId() + ". " + jugador.getNombre() +
+                                        " " +
+                                        jugador.getApellido() +
+                                        " Edad: " +
+                                        jugador.getEdad() +
+                                        " Goles:" +
+                                        jugador.getGoles() +
+                                        " Asistencias: " +
+                                        jugador.getAsistencias() +
+                                        " Posicion: " +
+                                        jugador.getPosicion();
+                                System.out.println(jugadorStringBuilder);
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Agregar jugador:");
+
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Intente de nuevo.");
+                            break;
+                    }
 
 
-                    ingresarJugadores(equipos.getFirst());
                     break;
                 case 4:
-                    empezarNuevoTorneo(scanner); // falta implementar la cargar de resultados
-                case 5:
+
+                    System.out.println("Muchas gracias por usar nuestro programa.");
                     exit = true;
                     scanner.close();
                     break;
