@@ -5,7 +5,55 @@ import java.util.Scanner;
 
 
 public class Main {
+
+    private static ArrayList<Equipo> equipos = new ArrayList<>();
+
     public static void main(String[] args)  {
+
+        Scanner scanner = new Scanner(System.in);
+        boolean exit = false;
+
+        while (!exit) {
+            System.out.println("Seleccione una opción:");
+            System.out.println("1. Leer archivo de equipos");
+            System.out.println("2. Crear equipo");
+            System.out.println("3. Crear y asginar jugador");
+            System.out.println("4. Crear torneo ");
+            System.out.println("5. Iniciar torneo");
+            System.out.println("6. Carga de resultados");
+            System.out.println("7. Salir");
+
+            int option = scanner.nextInt();
+            scanner.nextLine(); // es para que el siguiente ingreso no tome el salto de linea que se produce al presionar enter
+
+            switch (option) {
+                case 1:
+                    leerArchivoDeEquipos();
+                    break;
+                case 2:
+                    crearEquipo(scanner);
+                    break;
+                case 3:
+                    ingresarJugadores(equipo);
+                    break;
+                case 4:
+                    crearTorneo();
+                    break;
+                case 5:
+                    iniciarTorneo();
+                    break;
+                case 6:
+                    cargaDeResultados();
+                    break;
+                case 7:
+                    exit = true;
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
+            }
+        }
+    }
+    private static void leerArchivoDeEquipos() {
         try {
 
             ArrayList<String> lineas = Utilidades.leerArchivo("./equipos.txt");
@@ -20,8 +68,45 @@ public class Main {
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
 
+        private static void crearEquipo(Scanner scanner) {
 
+            System.out.println("Ingrese el nombre del equipo:");
+            String nombre = scanner.nextLine();
+
+            /* comparar el nombre del equipo con los nombres de los equipos existentes */
+            try {
+
+                ArrayList<String> lineas = Utilidades.leerArchivo("./equipos.txt");
+
+                for (String line : lineas) {
+
+                    Equipo equipo = Equipo.fromString(line);
+
+                    if (equipo.getNombre().equals(nombre)) {
+                        System.out.println("El equipo ya existe");
+                        return;
+                    }
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            /* creo el equipo */
+            Equipo equipo = new Equipo(Utilidades.generarId(), nombre);
+            equipos.add(equipo);
+            System.out.println("Equipo creado: " + equipo);
+
+          /*  try (BufferedWriter writer = new BufferedWriter(new FileWriter("./equipos.txt", true))) {
+                writer.write(equipo.toString());
+                writer.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }*/
+        }
+
+        }
 
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 
@@ -123,7 +208,7 @@ public class Main {
 
             System.out.println("¿Cuántos jugadores deseas agregar?");
             int numJugadores = scanner.nextInt();
-            scanner.nextLine(); // Consumir la nueva línea ?? Para que es esto?
+            scanner.nextLine(); // es para que el siguiente ingreso no tome el salto de linea que se produce al presionar enter
 
             for (int i = 0; i < numJugadores; i++) {
                 System.out.println("Ingrese el nombre del jugador:");
@@ -143,6 +228,6 @@ public class Main {
             System.out.println("Jugadores agregados:");
             System.out.println(equipo.formacion());
         }
-    }
+
 
 
