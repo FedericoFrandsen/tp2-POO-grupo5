@@ -118,7 +118,13 @@ public class Torneo {
             }
         }
 
+        for (Equipo equipo : this.equipos) {
+            equipo.incrementarTorneosJugados();
+        }
+
         this.equipoGanador = this.organizadorDePartidos.getEquiposParaSortear().getFirst();
+
+        this.equipoGanador.incrementarTorneosGanados();
     }
 
 

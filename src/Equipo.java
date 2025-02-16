@@ -151,6 +151,10 @@ public class Equipo implements TieneId {
         return torneosJugados;
     }
 
+    public void incrementarTorneosJugados() {
+        this.torneosJugados++;
+    }
+
     public void setTorneosJugados(int torneosJugados) {
         this.torneosJugados = torneosJugados;
     }
@@ -161,6 +165,10 @@ public class Equipo implements TieneId {
 
     public void setTorneosGanados(int torneosGanados) {
         this.torneosGanados = torneosGanados;
+    }
+
+    public void incrementarTorneosGanados() {
+        this.torneosGanados++;
     }
 
     public Jugador getJugadorPorId(int id) {

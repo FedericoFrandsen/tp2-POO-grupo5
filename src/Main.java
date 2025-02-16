@@ -314,6 +314,14 @@ public class Main {
 
                 torneo.guardarEnArchivo();
 
+                StringBuilder jugadoresActualizados = new StringBuilder();
+
+                for (Jugador jugador : jugadores) {
+                    jugadoresActualizados.append(jugador.toFileString()).append("\n");
+                }
+
+                Utilidades.escribirArchivo("./jugadores.txt", jugadoresActualizados.toString(), false);
+
 
                 // Calcular cuantos goles metieron, cuantos recibierons, etc. Ver qué jugador fue el maximo goleador.
 
