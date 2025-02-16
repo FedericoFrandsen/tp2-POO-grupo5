@@ -72,8 +72,60 @@ public class Main {
     }
 
     private static void crearTorneo() {
+            Scanner scanner = new Scanner(System.in);
+            System.out.println("Ingrese el nombre del torneo:");
+            String nombre = scanner.nextLine();
 
-    }
+            Torneo torneo = new Torneo(nombre);
+
+            ArrayList<Equipo> equiposDisponibles = new ArrayList<>();
+            try {
+                ArrayList<String> lineas = Utilidades.leerArchivo("./equipos.txt");
+                for (String line : lineas) {
+                    Equipo equipo = Equipo.fromString(line);
+                    equiposDisponibles.add(equipo);
+                }
+            } catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+
+            System.out.println("Equipos disponibles para seleccionar:");
+            for (Equipo equipo : equiposDisponibles) {
+                System.out.println("ID: " + equipo.getId() + " - " + equipo.getNombre());
+            }
+
+            System.out.println("Ingrese los IDs de los equipos que desea agregar al torneo, separados por comas:");
+            String[] ids = scanner.nextLine().split(",");
+            for (String idStr : ids) {
+                int equipoId = Integer.parseInt(idStr.trim());
+                boolean equipoEncontrado = false;
+                for (Equipo equipo : equiposDisponibles) {
+                    if (equipo.getId() == equipoId) {
+                        torneo.agregarEquipo(equipo);
+                        equipoEncontrado = true;
+                        break;
+                    }
+                }
+                if (!equipoEncontrado) {
+                    System.out.println("ID de equipo no válido: " + equipoId);
+                }
+            }
+
+            System.out.println("Torneo creado: " + torneo.getNombre());
+            System.out.println("Equipos en el torneo:");
+            for (Equipo equipo : torneo.getEquipos()) {
+                System.out.println(equipo.getNombre());
+            }
+
+       /* Escribir datos en el archivo??
+           try (BufferedWriter writer = new BufferedWriter(new FileWriter("./torneos.txt", true))) {
+                writer.write(torneo.toFileString());
+                writer.newLine();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }*/
+        }
+
 
     private static void leerArchivoDeEquipos() {
         try {

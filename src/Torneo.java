@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Torneo {
     private String nombre;
@@ -100,5 +101,9 @@ public class Torneo {
     public int getNumEquipos() {
         return equipos.size();
     }
+    public List<Equipo> getEquipos() {
+        return equipos;
+}
+
 }
 
