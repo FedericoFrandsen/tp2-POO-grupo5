@@ -5,11 +5,13 @@ public class Jugador extends Persona {
 
     private int goles;
     private int asistencias;
+    private String posicion;
 
-    public Jugador(String nombre, String apellido, int edad, int goles, int asistencias) {
+    public Jugador(String nombre, String apellido, int edad, int goles, int asistencias, String posicion) {
         super(nombre, apellido, edad);
         this.goles = goles;
         this.asistencias = asistencias;
+        this.posicion = posicion;
     }
 
     /**
