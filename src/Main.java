@@ -1,5 +1,6 @@
 import javax.xml.transform.Source;
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
@@ -7,25 +8,36 @@ import java.util.Scanner;
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 public class Main {
     public static void main(String[] args) {
-        pruebasDeArchivos();
+
+
+        Utilidades.escribirArchivo("./equipos.txt", "nombre:Equipo 8;golesMarcados:7;golesRecibidos:1\nnombre:Equipo 12;golesMarcados:42;golesRecibidos:12");
 
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 
-        Equipo equipo1 = new Equipo("Equipo 1");
+        Equipo equipo1 = new Equipo(0,"Equipo 1");
         equipo1.agregarJugador(new Jugador("Juan", "Perez", 25,  5, 3));
         equipo1.agregarJugador(new Jugador("Carlos", "Gomez", 22,  3, 2));
 
-        Equipo equipo2 = new Equipo("Equipo 2");
+        Equipo equipo2 = new Equipo(1,"Equipo 2");
         equipo2.agregarJugador(new Jugador("Luis", "Martinez", 28,  4, 4));
         equipo2.agregarJugador(new Jugador("Pedro", "Lopez", 24,  2, 1));
 
-        Equipo equipo3 = new Equipo("Equipo 3");
+        Equipo equipo3 = new Equipo(2,"Equipo 3");
         equipo3.agregarJugador(new Jugador("Miguel", "Sanchez", 30,  6, 5));
         equipo3.agregarJugador(new Jugador("Jorge", "Ramirez", 27,  3, 2));
 
-        Equipo equipo4 = new Equipo("Equipo 4");
+        Equipo equipo4 = new Equipo(3,"Equipo 4");
         equipo4.agregarJugador(new Jugador("Roberto", "Diaz", 26,  4, 3));
         equipo4.agregarJugador(new Jugador("Fernando", "Gonzalez", 23,  2, 1));
+
+        ArrayList<Equipo> equipos = new ArrayList<>();
+        equipos.add(equipo1);
+        equipos.add(equipo2);
+        equipos.add(equipo3);
+        equipos.add(equipo4);
+
+        int id = Utilidades.generarIdUnicaEn(equipos);
+        System.out.println("El id generado es: " + id);
 
         torneo.agregarEquipo(equipo1);
         torneo.agregarEquipo(equipo2);
@@ -91,15 +103,6 @@ public class Main {
             }
 
         } else {
-            try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(archivo))) {
-                Equipo equipo = new Equipo("Equipo 1");
-                equipo.setGolesMarcados(7);
-                equipo.setGolesRecibidos(1);
-                fileWriter.write(equipo.toString());
-                fileWriter.newLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
             System.out.println("El archivo no existe");
         }
     }

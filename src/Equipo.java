@@ -1,14 +1,16 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
-public class Equipo {
+public class Equipo implements ConId {
     private String nombre;
     private List<Jugador> jugadores = new ArrayList<>();
-
+    private int id;
     private int golesMarcados = 0;
     private int golesRecibidos = 0;
 
-    public Equipo(String nombre) {
+    public Equipo(int id,String nombre) {
+        this.id = id;
         this.nombre = nombre;
     }
 
@@ -22,19 +24,20 @@ public class Equipo {
 
 
         String[] atributos = equipoString.split(";");
-        Equipo equipo = new Equipo("Nombre por default, nunca deberia figurar");
+
+
+        HashMap<String, String> atributosMap = new HashMap<>();
+
         for (String atributo : atributos) {
             String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
             String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
 
-            switch (nombreDelAtributo) {
-                case "nombre" -> equipo = new Equipo(valorDelAtributo);
-                case "golesMarcados" -> equipo.setGolesMarcados(Integer.parseInt(valorDelAtributo));
-                case "golesRecibidos" -> equipo.setGolesRecibidos(Integer.parseInt(valorDelAtributo));
-            }
-
+            atributosMap.put(nombreDelAtributo, valorDelAtributo);
         }
+        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")),atributosMap.get("nombre"));
 
+        equipo.setGolesMarcados(Integer.parseInt(atributosMap.get("golesMarcados")));
+        equipo.setGolesRecibidos(Integer.parseInt(atributosMap.get("golesRecibidos")));
 
         return equipo;
     }
@@ -91,5 +94,9 @@ public class Equipo {
         this.golesRecibidos = golesRecibidos;
     }
 
+
+    public int getId() {
+        return id;
+    }
 
 }
