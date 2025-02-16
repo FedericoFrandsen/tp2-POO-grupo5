@@ -15,7 +15,7 @@ public class Utilidades {
      * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
      * @return int: ID no repetido en la lista pasada como argumento.
      */
-    public static <T extends ConId> int generarIdUnicaEn(ArrayList<T> lista) {
+    public static <T extends TieneId> int generarIdUnicaEn(ArrayList<T> lista) {
         // T es un parametro generico de Tipo, es decir establece condiciones para el tipo de dato que se puede recibir,
         // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz ConId. Y como el parametro que pedimos es un
         // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente ConId.
@@ -26,6 +26,10 @@ public class Utilidades {
                 return newId;
             }
         } while (true);
+    }
+
+    public static int generarId() {
+        return random.nextInt(10000);
     }
 
     /**

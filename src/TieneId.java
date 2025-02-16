@@ -1,4 +1,4 @@
-public interface ConId {
+public interface TieneId {
     public int getId();
 
 }

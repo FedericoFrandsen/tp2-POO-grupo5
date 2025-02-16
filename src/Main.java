@@ -15,20 +15,20 @@ public class Main {
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 
         Equipo equipo1 = new Equipo(0,"Equipo 1");
-        equipo1.agregarJugador(new Jugador("Juan", "Perez", 25,  5, 3, "arquero"));
-        equipo1.agregarJugador(new Jugador("Carlos", "Gomez", 22,  3, 2, "defensa"));
+        equipo1.agregarJugador(new Jugador(1,"Juan", "Perez", 25,  5, 3, "arquero"));
+        equipo1.agregarJugador(new Jugador(2,"Carlos", "Gomez", 22,  3, 2, "defensa"));
 
         Equipo equipo2 = new Equipo(1,"Equipo 2");
-        equipo2.agregarJugador(new Jugador("Luis", "Martinez", 28,  4, 4, "arquero"));
-        equipo2.agregarJugador(new Jugador("Pedro", "Lopez", 24,  2, 1, "defensa"));
+        equipo2.agregarJugador(new Jugador(3,"Luis", "Martinez", 28,  4, 4, "arquero"));
+        equipo2.agregarJugador(new Jugador(4,"Pedro", "Lopez", 24,  2, 1, "defensa"));
 
         Equipo equipo3 = new Equipo(2,"Equipo 3");
-        equipo3.agregarJugador(new Jugador("Miguel", "Sanchez", 30,  6, 5, "arquero"));
-        equipo3.agregarJugador(new Jugador("Jorge", "Ramirez", 27,  3, 2, "defensa"));
+        equipo3.agregarJugador(new Jugador(5,"Miguel", "Sanchez", 30,  6, 5, "arquero"));
+        equipo3.agregarJugador(new Jugador(6,"Jorge", "Ramirez", 27,  3, 2, "defensa"));
 
         Equipo equipo4 = new Equipo(3,"Equipo 4");
-        equipo4.agregarJugador(new Jugador("Roberto", "Diaz", 26,  4, 3, "arquero"));
-        equipo4.agregarJugador(new Jugador("Fernando", "Gonzalez", 23,  2, 1, "defensa"));
+        equipo4.agregarJugador(new Jugador(7,"Roberto", "Diaz", 26,  4, 3, "arquero"));
+        equipo4.agregarJugador(new Jugador(8,"Fernando", "Gonzalez", 23,  2, 1, "defensa"));
 
         ArrayList<Equipo> equipos = new ArrayList<>();
         equipos.add(equipo1);
@@ -125,7 +125,7 @@ public class Main {
                 String posicion = scanner.nextLine();
 
 
-                Jugador jugador = new Jugador(nombre, apellido, edad, 0, 0, posicion);
+                Jugador jugador = new Jugador(Utilidades.generarId(),nombre, apellido, edad, 0, 0, posicion);
                 equipo.agregarJugador(jugador);
             }
 

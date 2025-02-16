@@ -1,9 +1,8 @@
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class Equipo implements ConId {
+public class Equipo implements TieneId {
     private String nombre;
     private ArrayList<Jugador> jugadores = new ArrayList<>();
     private int id;

@@ -1,14 +1,15 @@
 import java.util.HashMap;
-import java.util.Map;
 
-public class Jugador extends Persona {
+public class Jugador extends Persona implements TieneId {
 
     private int goles;
     private int asistencias;
     private String posicion;
+    private int id;
 
-    public Jugador(String nombre, String apellido, int edad, int goles, int asistencias, String posicion) {
+    public Jugador(int id,String nombre, String apellido, int edad, int goles, int asistencias, String posicion) {
         super(nombre, apellido, edad);
+        this.id = id;
         this.goles = goles;
         this.asistencias = asistencias;
         this.posicion = posicion;
@@ -32,7 +33,15 @@ public class Jugador extends Persona {
             atributosMap.put(nombreDelAtributo, valorDelAtributo);
         }
 
-        return new Jugador(atributosMap.get("nombre"), atributosMap.get("apellido"), Integer.parseInt(atributosMap.get("edad")), Integer.parseInt(atributosMap.get("goles")), Integer.parseInt(atributosMap.get("asistencias")));
+        return new Jugador(
+                Integer.parseInt(atributosMap.get("id")),
+                atributosMap.get("nombre"),
+                atributosMap.get("apellido"),
+                Integer.parseInt(atributosMap.get("edad")),
+                Integer.parseInt(atributosMap.get("goles")),
+                Integer.parseInt(atributosMap.get("asistencias")),
+                atributosMap.get("posicion")
+        );
     }
 
     public String toString() {
