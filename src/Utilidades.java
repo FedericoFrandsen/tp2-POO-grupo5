@@ -1,8 +1,6 @@
 
 import java.io.*;
 import java.util.ArrayList;
-
-import java.util.Iterator;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -11,7 +9,7 @@ public class Utilidades {
     private static final Random random = new Random();
 
     /**
-     * Genera un id único para un objeto dentro de la lista pasada como argumento
+     * Genera un ID único para un objeto dentro de la lista pasada como argumento
      *
      * @param lista Lista de objetos que implementan la interfaz `ConId`
      * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
@@ -60,6 +58,7 @@ public class Utilidades {
                 return fileReader.lines();
 
             } catch (IOException e) {
+                System.err.println(e.toString());
                 throw new RuntimeException(e);
             }
 
