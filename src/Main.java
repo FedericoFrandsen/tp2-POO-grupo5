@@ -15,6 +15,11 @@ public class Main {
             ArrayList<String> lineasJugadores = Utilidades.leerArchivo("./jugadores.txt");
 
             for (String line : lineasJugadores) {
+
+                if(line.isEmpty()) {
+                    continue;
+                }
+
                 Jugador jugador = Jugador.fromString(line);
                 jugadores.add(jugador);
             }
@@ -22,6 +27,11 @@ public class Main {
             ArrayList<String> lineasEquipos = Utilidades.leerArchivo("./equipos.txt");
 
             for (String line : lineasEquipos) {
+
+                if (line.isEmpty()) {
+                    continue;
+                }
+
                 Equipo equipo = Equipo.fromString(line, jugadores);
                 equipos.add(equipo);
             }
@@ -83,6 +93,7 @@ public class Main {
                         case 1:
                             System.out.println("Jugadores:");
                             for (Jugador jugador : jugadores) {
+
                                 String jugadorString = jugador.getId() + ". " + jugador.getNombre() +
                                         " " +
                                         jugador.getApellido() +
@@ -94,6 +105,7 @@ public class Main {
                                         jugador.getAsistencias() +
                                         " Posicion: " +
                                         jugador.getPosicion();
+
                                 System.out.println(jugadorString);
                             }
                             break;
@@ -317,17 +329,25 @@ public class Main {
                 StringBuilder jugadoresActualizados = new StringBuilder();
 
                 for (Jugador jugador : jugadores) {
-                    jugadoresActualizados.append(jugador.toFileString()).append("\n");
+                    jugadoresActualizados.append(jugador.toFileString());
                 }
 
                 Utilidades.escribirArchivo("./jugadores.txt", jugadoresActualizados.toString(), false);
 
 
-                // Calcular cuantos goles metieron, cuantos recibierons, etc. Ver qué jugador fue el maximo goleador.
+                StringBuilder equiposActualizados = new StringBuilder();
+
+                for (Equipo equipo : equipos) {
+                    equiposActualizados.append(equipo.toFileString());
+                }
+
+                Utilidades.escribirArchivo("./equipos.txt", equiposActualizados.toString(), false);
+
+
 
             } catch (RuntimeException e) {
                 System.out.println(e.getMessage());
-                return;
+
             }
 
 
@@ -336,14 +356,10 @@ public class Main {
 
     private static void crearEquipo(Scanner scanner) {
 
-
-
         System.out.println("Ingrese el nombre del equipo:");
         System.out.println();
 
         String nombre = scanner.nextLine();
-
-
 
         for (Equipo equipo : equipos) {
 
@@ -388,7 +404,7 @@ public class Main {
         System.out.println("\nEquipo completado!\n");
         System.out.println(equipo.formacion());
 
-        Utilidades.escribirArchivo("./equipos.txt", equipo.toFileString(), false);
+        Utilidades.escribirArchivo("./equipos.txt", equipo.toFileString() + "\n", true);
     }
 
 

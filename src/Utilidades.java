@@ -45,7 +45,6 @@ public class Utilidades {
         File archivo = new File(direccionArchivo);
 
         try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(archivo, agregar))) {
-            fileWriter.newLine();
             fileWriter.write(contenido);
         } catch (IOException e) {
             throw new RuntimeException(e);

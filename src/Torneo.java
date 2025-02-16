@@ -84,7 +84,7 @@ public class Torneo {
             }
         }
 
-        torneoStringBuilder.append("]");
+        torneoStringBuilder.append("]\n");
 
         return torneoStringBuilder.toString();
     }
@@ -129,7 +129,6 @@ public class Torneo {
 
 
     public void guardarEnArchivo() {
-
         Utilidades.escribirArchivo("torneos.txt", this.toFileString(), true);
     }
 

@@ -82,7 +82,7 @@ public class Equipo implements TieneId {
             }
         }
 
-        equipoStringBuilder.append("]");
+        equipoStringBuilder.append("]\n");
 
         return equipoStringBuilder.toString();
     }
