@@ -51,16 +51,25 @@ public class Equipo implements TieneId {
     }
 
     /**
-     * Devuelve una representación en String del objeto Equipo
-     * Este metodo lo llama automáticamente el System.out.println, y sobrescribiéndolo se puede modificar como se muestra por consola el equipo.
+     * Devuelve una representación en String del objeto Equipo para almacenar en un archivo.
      * @return String
      */
-    @Override
-    public String toString() {
-        StringBuilder equipoStringBuilder = new StringBuilder("id:" + this.getId() + ";nombre:" + this.nombre + ";golesMarcados:" + this.golesMarcados + ";golesRecibidos:" + this.golesRecibidos + ";jugadores:[");
+    public String toFileString() {
+        StringBuilder equipoStringBuilder = new StringBuilder("id:" + this.getId())
+                .append(";nombre:")
+                .append(this.nombre)
+                .append(";golesMarcados:")
+                .append(this.golesMarcados)
+                .append(";golesRecibidos:")
+                .append(this.golesRecibidos)
+                .append(";torneosJugados:")
+                .append(this.torneosJugados)
+                .append(";torneosGanados:")
+                .append(this.torneosGanados)
+                .append(";jugadores:[");
 
         for (Jugador jugador : jugadores) {
-            equipoStringBuilder.append(jugador.toString().replace(";", "|"));
+            equipoStringBuilder.append(jugador.toFileString().replace(";", "|"));
 
             if(jugadores.indexOf(jugador) != jugadores.size() - 1) {
                 equipoStringBuilder.append(",");

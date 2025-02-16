@@ -27,12 +27,37 @@ public class Torneo {
 
     public void iniciarTorneo() throws RuntimeException {
         if (equipos.size() == 8) {
+            // estoy casi seguro que vamos a tener un problema con el tema de referencias de listas, pero ya veremos.
             organizadorDePartidos.setEquiposParaSortear(equipos);
 
         } else {
             throw new RuntimeException("El torneo no puede iniciar, se necesitan 8 equipos");
 
         }
+    }
+
+
+    public String toFileString() {
+        StringBuilder torneoStringBuilder = new StringBuilder("torneo:" + nombre)
+                .append(";equipoGanador:")
+                .append(equipoGanador)
+                .append(";maximoGoleador:")
+                .append(maximoGoleador)
+                .append(";maximoAsistidor:")
+                .append(maximoAsistidor)
+                .append(";equipos:[");
+
+        for (Equipo equipo : equipos) {
+            torneoStringBuilder.append(equipo.toFileString().replace(";", "|"));
+            if(equipos.indexOf(equipo) != equipos.size() - 1) {
+                torneoStringBuilder.append(",");
+            }
+        }
+
+        torneoStringBuilder.append("]");
+
+
+        return torneoStringBuilder.toString();
     }
 
     public void eliminarEquipo(Equipo equipo) {

@@ -17,10 +17,6 @@ public class Jugador extends Persona implements TieneId {
     }
 
 
-    @Override
-    public int getId() {
-        return id;
-    }
 
 
     /**
@@ -44,9 +40,26 @@ public class Jugador extends Persona implements TieneId {
         );
     }
 
-    public String toString() {
-        return "id:" + this.getId() + ";nombre:" + this.getNombre() + ";apellido:" + this.getApellido() + ";edad:" + this.getEdad() + ";goles:" + this.goles + ";asistencias:" + this.asistencias + ";posicion:" + this.posicion;
-    }
+    /**
+     * Devuelve una representación en String del objeto Jugador para almacenar en un archivo.
+     * @return String
+     */
+    public String toFileString() {
+
+        return "id:" + this.getId() +
+                ";nombre:" +
+                this.getNombre() +
+                ";apellido:" +
+                this.getApellido() +
+                ";edad:" +
+                this.getEdad() +
+                ";goles:" +
+                this.getGoles() +
+                ";asistencias:" +
+                this.getAsistencias() +
+                ";posicion:" +
+                this.getPosicion();
+        }
 
     public void incrementarGoles() {
         this.goles++;
@@ -57,12 +70,26 @@ public class Jugador extends Persona implements TieneId {
     }
 
     // Getters y Setters
+    @Override
+    public int getId() {
+        return id;
+    }
+
+
     public int getGoles() {
         return goles;
     }
 
     public void setGoles(int goles) {
         this.goles = goles;
+    }
+
+    public void setPosicion(String posicion) {
+        this.posicion = posicion;
+    }
+
+    public String getPosicion() {
+        return posicion;
     }
 
     public int getAsistencias() {

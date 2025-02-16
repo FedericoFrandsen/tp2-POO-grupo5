@@ -10,6 +10,16 @@ public class Main {
 
     public static void main(String[] args) {
 
+
+//        Torneo torneo = new Torneo("Torneo 1");
+//
+//        Equipo equipo = new Equipo(1, "Equipo 1");
+//        equipo.agregarJugador(new Jugador(1, "Jugador 1", "Apellido 1", 20, 0, 0, "arquero"));
+//        torneo.agregarEquipo(equipo);
+//        torneo.agregarEquipo(new Equipo(2, "Equipo 2"));
+//
+//        Utilidades.escribirArchivo("./torneos.txt", torneo.toFileString(), true);
+
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
 
