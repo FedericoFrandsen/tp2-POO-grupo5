@@ -2,6 +2,7 @@
 import java.io.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Random;
 import java.util.stream.Stream;
 
@@ -37,12 +38,13 @@ public class Utilidades {
      * Escribe un archivo con el contenido pasado como parametro. (Siempre sobreescribe el contenido anterior)
      * @param direccionArchivo path al archivo
      * @param contenido string a escribir en el archivo
+     * @param agregar booleano que indica si agregar el contenido al archivo o sobreescribirlo.
      * @throws RuntimeException en caso de que haya un error al escribir el archivo.
      */
-    public static void escribirArchivo(String direccionArchivo, String contenido) throws RuntimeException {
+    public static void escribirArchivo(String direccionArchivo, String contenido, boolean agregar) throws RuntimeException {
         File archivo = new File(direccionArchivo);
 
-        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(archivo))) {
+        try (BufferedWriter fileWriter = new BufferedWriter(new FileWriter(archivo, agregar))) {
             fileWriter.write(contenido);
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -76,5 +78,34 @@ public class Utilidades {
         } catch (IOException e) {
             throw new UncheckedIOException("Error al leer el archivo: " + direccionArchivo, e);
         }
+    }
+
+
+    public static HashMap<String, String> stringToMap(String cadena) {
+        if (cadena.trim().isEmpty()) {
+            throw new IllegalArgumentException("El string no puede ser nulo o vacío");
+        }
+
+        // El string llega en este formato -> "nombre:Equipo 1;golesMarcados:7;golesRecibidos:1"
+        String[] atributos = cadena.split(";");
+        // atributos -> [ "nombre:Equipo 1", "golesMarcados:7", "golesRecibidos:1" ]
+
+        // creamos un hashMap para guardar los datos que extraemos del string
+
+        HashMap<String, String> atributosMap = new HashMap<>();
+
+        for (String atributo : atributos) {
+            // Los atributos estan en este formato [nombreDeAtributo]:[valorDeAtributo]
+            // agarramos el nombre del atributo, que es todo lo que esta antes de los dos puntos
+            // para hacerlo usamos substring que recibe dos indices, el primero desde que parte del string y el segundo hasta donde corta.
+            String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
+            // Hacemos lo mismo con el valor del atributo, pero en este caso queremos todo lo que esta despues de los dos puntos.
+            String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
+
+            // guardamos los atributos en el hashMap.
+            atributosMap.put(nombreDelAtributo, valorDelAtributo);
+        }
+
+        return atributosMap;
     }
 }

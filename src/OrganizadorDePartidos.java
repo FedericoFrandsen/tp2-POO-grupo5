@@ -35,8 +35,9 @@ public class OrganizadorDePartidos {
 
         while(!this.equiposParaSortear.isEmpty()) {
             //  Si solo queda un equipo para sortear quiere decir que este es el ganador del torneo.
-            if ( this.equiposParaSortear.size() == 1){
+            if ( this.equiposParaSortear.size() == 1) {
                 System.out.println("El equipo ganador es: " + this.equiposParaSortear.getFirst().getNombre());
+                this.torneo.setEquipoGanador(this.equiposParaSortear.getFirst());
                 break;
             }
             //  Seleccionamos dos equipos random para que se enfrenten
@@ -76,7 +77,8 @@ public class OrganizadorDePartidos {
                 if (this.equiposParaSortear.isEmpty()) {
                     throw new RuntimeException("Por alguna razon los equipos estan vacios, esto no deberia pasar.");
                 } else if (this.equiposParaSortear.size() == 1) {
-                    System.out.println("El equipo ganador del Torneo es: " + this.equiposParaSortear.getFirst().getNombre());
+                    System.out.println("El equipo ganador es: " + this.equiposParaSortear.getFirst().getNombre());
+                    this.torneo.setEquipoGanador(this.equiposParaSortear.getFirst());
                     break;
                 }
 

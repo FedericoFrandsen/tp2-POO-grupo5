@@ -8,6 +8,8 @@ public class Equipo implements TieneId {
     private int id;
     private int golesMarcados = 0;
     private int golesRecibidos = 0;
+    private int torneosJugados = 0;
+    private int torneosGanados = 0;
 
     public Equipo(int id,String nombre) {
         this.id = id;
@@ -22,29 +24,8 @@ public class Equipo implements TieneId {
      */
     public static Equipo fromString(String equipoString) {
 
-        // El string llega en este formato -> "nombre:Equipo 1;golesMarcados:7;golesRecibidos:1"
-        String[] atributos = equipoString.split(";");
-        // atributos -> [ "nombre:Equipo 1", "golesMarcados:7", "golesRecibidos:1" ]
 
-        // creamos un hashMap para guardar los datos que extraemos del string
-        HashMap<String, String> atributosMap = new HashMap<>();
-
-        for (String atributo : atributos) {
-
-
-            // nombre:Equipo 1
-            // agarramos el nombre del atributo, que es todo lo que esta antes de los dos puntos
-            // para hacerlo usamos substring que recibe dos indices, el primero desde que parte del string y el segundo hasta donde corta.
-            String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
-            // Hacemos lo mismo con el valor del atributo, pero en este caso queremos todo lo que esta despues de los dos puntos.
-            String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
-
-            System.out.println(nombreDelAtributo);
-            System.out.println(valorDelAtributo);
-
-            // guardamos los atributos en el hashMap.
-            atributosMap.put(nombreDelAtributo, valorDelAtributo);
-        }
+        var atributosMap = Utilidades.stringToMap(equipoString);
 
         // Creamos una instancia del equipo con los valores extraidos del string.
         Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"));
@@ -62,6 +43,8 @@ public class Equipo implements TieneId {
 
         equipo.setGolesMarcados(Integer.parseInt(atributosMap.get("golesMarcados")));
         equipo.setGolesRecibidos(Integer.parseInt(atributosMap.get("golesRecibidos")));
+        equipo.setTorneosGanados(Integer.parseInt(atributosMap.get("torneosGanados")));
+        equipo.setTorneosJugados(Integer.parseInt(atributosMap.get("torneosJugados")));
 
 
         return equipo;
@@ -90,6 +73,15 @@ public class Equipo implements TieneId {
     }
 
     public void agregarJugador(Jugador jugador) {
+        if (jugadores.size() == 5) {
+            System.out.println("El equipo ya tiene 5 jugadores, no se pueden agregar más.");
+            return;
+        }
+        if (jugadores.contains(jugador)) {
+            System.out.println("El jugador " + jugador.getNombre() + " " + jugador.getApellido() + " ya está en el equipo.");
+            return;
+        }
+
         jugadores.add(jugador);
     }
 
@@ -136,4 +128,19 @@ public class Equipo implements TieneId {
         return id;
     }
 
+    public int getTorneosJugados() {
+        return torneosJugados;
+    }
+
+    public void setTorneosJugados(int torneosJugados) {
+        this.torneosJugados = torneosJugados;
+    }
+
+    public int getTorneosGanados() {
+        return torneosGanados;
+    }
+
+    public void setTorneosGanados(int torneosGanados) {
+        this.torneosGanados = torneosGanados;
+    }
 }

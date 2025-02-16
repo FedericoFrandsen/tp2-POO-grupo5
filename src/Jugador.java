@@ -1,5 +1,6 @@
 import java.util.HashMap;
 
+
 public class Jugador extends Persona implements TieneId {
 
     private int goles;
@@ -15,6 +16,7 @@ public class Jugador extends Persona implements TieneId {
         this.posicion = posicion;
     }
 
+
     @Override
     public int getId() {
         return id;
@@ -27,16 +29,8 @@ public class Jugador extends Persona implements TieneId {
      * Este metodo lo usamos para convertir un string en un objeto Jugador, por ejemplo cuando leemos un archivo y queremos convertir los datos en Jugadores.
      */
     public static Jugador fromString(String jugadorString) {
-        String[] atributos = jugadorString.split(";");
 
-        HashMap<String, String> atributosMap = new HashMap<>();
-
-        for (String atributo : atributos) {
-            String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
-            String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
-
-            atributosMap.put(nombreDelAtributo, valorDelAtributo);
-        }
+        var atributosMap = Utilidades.stringToMap(jugadorString);
 
         return new Jugador(
                 Integer.parseInt(atributosMap.get("id")),

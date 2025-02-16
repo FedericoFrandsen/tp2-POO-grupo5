@@ -4,7 +4,7 @@ public class Torneo {
     private String nombre;
     private OrganizadorDePartidos organizadorDePartidos;
     private ArrayList<Equipo> equipos = new ArrayList<>();
-
+    private Equipo equipoGanador = null;
     private Jugador maximoGoleador;
     private Jugador maximoAsistidor;
 
@@ -14,20 +14,29 @@ public class Torneo {
     }
 
     public void agregarEquipo(Equipo equipo) {
+        if (equipos.size() == 8) {
+            System.out.println("El torneo ya tiene 8 equipos, no se pueden agregar más.");
+            return;
+        }
+        if (equipos.contains(equipo)) {
+            System.out.println("El equipo " + equipo.getNombre() +  " ya está en el torneo.");
+            return;
+        }
         equipos.add(equipo);
     }
 
-    public void iniciarTorneo() {
-        if (equipos.size() == 4 || equipos.size() == 8 || equipos.size() == 16) {
+    public void iniciarTorneo() throws RuntimeException {
+        if (equipos.size() == 8) {
             organizadorDePartidos.setEquiposParaSortear(equipos);
 
         } else {
-            System.out.println("El torneo no puede iniciar, se necesitan 8 o 16 equipos");
+            throw new RuntimeException("El torneo no puede iniciar, se necesitan 8 equipos");
 
         }
     }
 
     public void eliminarEquipo(Equipo equipo) {
+
         equipos.remove(equipo);
     }
 
@@ -43,14 +52,20 @@ public class Torneo {
     }
 
     public Equipo obtenerEquipoCampeon() {
-        if (equipos.size() == 1) {
-            return equipos.getFirst();
-        }
-        return null;
+        return this.equipoGanador;
     }
 
     public OrganizadorDePartidos getOrganizadorDePartidos() {
         return organizadorDePartidos;
+    }
+
+    public void setEquipoGanador(Equipo equipoGanador) throws RuntimeException {
+        if(this.organizadorDePartidos.hayPartidosPendientes()) {
+            throw new RuntimeException("No se puede definir un equipo ganador si hay partidos pendientes.");
+
+        }
+
+        this.equipoGanador = equipoGanador;
     }
 
     public String getNombre() {
