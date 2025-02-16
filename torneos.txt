@@ -1,0 +1,1 @@
+nombre:toneiro;equipoGanadorId:2;maximoGoleador:No hubo goles;maximoAsistidor:No hubo asistencias;equiposIds:[2]
