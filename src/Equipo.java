@@ -21,8 +21,10 @@ public class Equipo implements TieneId {
      *     Para el equipo sería algo asi:
      *     nombre:Equipo 1;golesMarcados:7;golesRecibidos:1
      * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir los datos en Equipos.
+     * @param equipoString String con los atributos del equipo.
+     * @param jugadores Lista de jugadores para poder asignarlos al equipo sin crear instancias duplicadas..
      */
-    public static Equipo fromString(String equipoString) {
+    public static Equipo fromString(String equipoString, ArrayList<Jugador> jugadores) {
 
 
         var atributosMap = Utilidades.stringToMap(equipoString);
@@ -31,14 +33,18 @@ public class Equipo implements TieneId {
         Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"));
 
 
-        String jugadoresString = atributosMap.get("jugadores");
+        String jugadoresString = atributosMap.get("jugadoresIds");
+
         jugadoresString = jugadoresString.substring(jugadoresString.indexOf("[") + 1, jugadoresString.indexOf("]"));
-        for (String jugadorString : jugadoresString.split(",")) {
-            System.out.println(jugadorString);
-            jugadorString = jugadorString.replaceAll("\\|", ";");
-            System.out.println(jugadorString);
-            Jugador jugador = Jugador.fromString(jugadorString);
-            equipo.agregarJugador(jugador);
+        for (String jugadorId : jugadoresString.split(",")) {
+
+            for (Jugador jugador : jugadores) {
+                if (jugador.getId() == Integer.parseInt(jugadorId)) {
+                    equipo.agregarJugador(jugador);
+                    break;
+                }
+            }
+
         }
 
         equipo.setGolesMarcados(Integer.parseInt(atributosMap.get("golesMarcados")));
@@ -66,10 +72,10 @@ public class Equipo implements TieneId {
                 .append(this.torneosJugados)
                 .append(";torneosGanados:")
                 .append(this.torneosGanados)
-                .append(";jugadores:[");
+                .append(";jugadoresIds:[");
 
         for (Jugador jugador : jugadores) {
-            equipoStringBuilder.append(jugador.toFileString().replace(";", "|"));
+            equipoStringBuilder.append(jugador.getId());
 
             if(jugadores.indexOf(jugador) != jugadores.size() - 1) {
                 equipoStringBuilder.append(",");
@@ -101,7 +107,7 @@ public class Equipo implements TieneId {
     }
 
     public String formacion() {
-        StringBuilder formacion = new StringBuilder("Formación del equipo " + nombre + ":\n");
+        StringBuilder formacion = new StringBuilder("Formación de " + nombre + ":\n");
         for (Jugador jugador : jugadores) {
             formacion.append(jugador.getNombre()).append(" ").append(jugador.getApellido()).append("\n");
         }
@@ -151,5 +157,14 @@ public class Equipo implements TieneId {
 
     public void setTorneosGanados(int torneosGanados) {
         this.torneosGanados = torneosGanados;
+    }
+
+    public Jugador getJugadorPorId(int id) {
+        for (Jugador jugador : jugadores) {
+            if (jugador.getId() == id) {
+                return jugador;
+            }
+        }
+        return null;
     }
 }

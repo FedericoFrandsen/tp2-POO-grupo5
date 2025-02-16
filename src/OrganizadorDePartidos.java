@@ -97,6 +97,7 @@ public class OrganizadorDePartidos {
      * y agrega al equipo ganador a la lista de equipos para sortear.
      */
     public void finalizarPartidoActual(Equipo ganador) {
+
         this.equiposParaSortear.add(ganador);
         this.partidosJugados.add(this.partidoActual);
         this.partidoActual = null;
