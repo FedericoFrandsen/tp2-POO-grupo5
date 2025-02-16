@@ -1,5 +1,6 @@
 
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.stream.Stream;
@@ -29,7 +30,7 @@ public class Utilidades {
     }
 
     public static int generarId() {
-        return random.nextInt(10000);
+        return random.nextInt(100000);
     }
 
     /**
@@ -55,22 +56,25 @@ public class Utilidades {
      * @return Stream<String> con cada línea del archivo.
      * @throws RuntimeException en caso de que no exista el archivo, o haya un error al leerlo.
      */
-    public static Stream<String> leerArchivo(String direccionArchivo) throws RuntimeException {
-        File archivo = new File(direccionArchivo);
-
-        if (archivo.exists()) {
-            try (BufferedReader fileReader = new BufferedReader(new FileReader(archivo))) {
-                return fileReader.lines();
-
-            } catch (IOException e) {
-                System.err.println(e.toString());
-                throw new RuntimeException(e);
-            }
-
-        } else {
-            throw new RuntimeException("El archivo no existe, direccion de archivo: " + direccionArchivo);
+    public static ArrayList<String> leerArchivo(String direccionArchivo) throws FileNotFoundException {
+        if (direccionArchivo.trim().isEmpty()) {
+            throw new IllegalArgumentException("La dirección del archivo no puede ser nula o vacía");
         }
 
+        File archivo = new File(direccionArchivo);
+        if (!archivo.exists()) {
+            throw new FileNotFoundException("El archivo no existe: " + direccionArchivo);
+        }
 
+        ArrayList<String> lines = new ArrayList<>();
+        try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+            return lines;
+        } catch (IOException e) {
+            throw new UncheckedIOException("Error al leer el archivo: " + direccionArchivo, e);
+        }
     }
 }

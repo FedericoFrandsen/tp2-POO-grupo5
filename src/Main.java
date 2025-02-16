@@ -1,16 +1,27 @@
-import javax.xml.transform.Source;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args)  {
+        try {
+
+            ArrayList<String> lineas = Utilidades.leerArchivo("./equipos.txt");
+
+            for (String line : lineas) {
+
+                Equipo equipo = Equipo.fromString(line);
+
+                System.out.println(equipo);
+
+            }
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
 
 
-        Utilidades.escribirArchivo("./equipos.txt", "nombre:Equipo 8;golesMarcados:7;golesRecibidos:1\nnombre:Equipo 12;golesMarcados:42;golesRecibidos:12");
 
         Torneo torneo = new Torneo("Torneo de Futbol 5");
 

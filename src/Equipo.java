@@ -22,22 +22,47 @@ public class Equipo implements TieneId {
      */
     public static Equipo fromString(String equipoString) {
 
-
+        // El string llega en este formato -> "nombre:Equipo 1;golesMarcados:7;golesRecibidos:1"
         String[] atributos = equipoString.split(";");
+        // atributos -> [ "nombre:Equipo 1", "golesMarcados:7", "golesRecibidos:1" ]
 
-
+        // creamos un hashMap para guardar los datos que extraemos del string
         HashMap<String, String> atributosMap = new HashMap<>();
 
         for (String atributo : atributos) {
+
+
+            // nombre:Equipo 1
+            // agarramos el nombre del atributo, que es todo lo que esta antes de los dos puntos
+            // para hacerlo usamos substring que recibe dos indices, el primero desde que parte del string y el segundo hasta donde corta.
             String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
+            // Hacemos lo mismo con el valor del atributo, pero en este caso queremos todo lo que esta despues de los dos puntos.
             String valorDelAtributo = atributo.substring(atributo.indexOf(":") + 1);
 
+            System.out.println(nombreDelAtributo);
+            System.out.println(valorDelAtributo);
+
+            // guardamos los atributos en el hashMap.
             atributosMap.put(nombreDelAtributo, valorDelAtributo);
         }
-        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")),atributosMap.get("nombre"));
+
+        // Creamos una instancia del equipo con los valores extraidos del string.
+        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"));
+
+
+        String jugadoresString = atributosMap.get("jugadores");
+        jugadoresString = jugadoresString.substring(jugadoresString.indexOf("[") + 1, jugadoresString.indexOf("]"));
+        for (String jugadorString : jugadoresString.split(",")) {
+            System.out.println(jugadorString);
+            jugadorString = jugadorString.replaceAll("\\|", ";");
+            System.out.println(jugadorString);
+            Jugador jugador = Jugador.fromString(jugadorString);
+            equipo.agregarJugador(jugador);
+        }
 
         equipo.setGolesMarcados(Integer.parseInt(atributosMap.get("golesMarcados")));
         equipo.setGolesRecibidos(Integer.parseInt(atributosMap.get("golesRecibidos")));
+
 
         return equipo;
     }
@@ -49,7 +74,19 @@ public class Equipo implements TieneId {
      */
     @Override
     public String toString() {
-        return "nombre:" + this.nombre + ";golesMarcados:" + this.golesMarcados + ";golesRecibidos:" + this.golesRecibidos;
+        StringBuilder equipoStringBuilder = new StringBuilder("id:" + this.getId() + ";nombre:" + this.nombre + ";golesMarcados:" + this.golesMarcados + ";golesRecibidos:" + this.golesRecibidos + ";jugadores:[");
+
+        for (Jugador jugador : jugadores) {
+            equipoStringBuilder.append(jugador.toString().replace(";", "|"));
+
+            if(jugadores.indexOf(jugador) != jugadores.size() - 1) {
+                equipoStringBuilder.append(",");
+            }
+        }
+
+        equipoStringBuilder.append("]");
+
+        return equipoStringBuilder.toString();
     }
 
     public void agregarJugador(Jugador jugador) {

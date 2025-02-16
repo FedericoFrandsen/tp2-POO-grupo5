@@ -15,6 +15,11 @@ public class Jugador extends Persona implements TieneId {
         this.posicion = posicion;
     }
 
+    @Override
+    public int getId() {
+        return id;
+    }
+
     /**
      * Devuelve un objeto Jugador a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
      *     Para el equipo sería algo asi:
@@ -45,7 +50,7 @@ public class Jugador extends Persona implements TieneId {
     }
 
     public String toString() {
-        return "nombre:" + this.getNombre() + ";apellido:" + this.getApellido() + ";edad:" + this.getEdad() + ";goles:" + this.goles + ";asistencias:" + this.asistencias;
+        return "id:" + this.getId() + ";nombre:" + this.getNombre() + ";apellido:" + this.getApellido() + ";edad:" + this.getEdad() + ";goles:" + this.goles + ";asistencias:" + this.asistencias + ";posicion:" + this.posicion;
     }
 
     public void incrementarGoles() {
