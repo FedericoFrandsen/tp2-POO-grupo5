@@ -46,8 +46,8 @@ public class Main {
         while (!exit) {
             System.out.println("Elegi que recurso queres administrar:");
             System.out.println("1. Torneos");
-            System.out.println("2. Equipos");
-            System.out.println("3. Jugadores");
+            System.out.println("2. Jugadores");
+            System.out.println("3. Equipos");
             System.out.println("4. Salir");
 
             int option = scanner.nextInt();
@@ -58,6 +58,7 @@ public class Main {
                     System.out.println("1. Ver historial de torneos");
                     System.out.println("2. Empezar nuevo torneo");
                     int torneoOption = scanner.nextInt();
+                    scanner.nextLine();
 
                     switch (torneoOption) {
                         case 1:
@@ -72,10 +73,47 @@ public class Main {
 
                     break;
                 case 2:
+                    System.out.println("1. Ver jugadores");
+                    System.out.println("2. Agregar jugador");
+
+                    int jugadorOption = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (jugadorOption) {
+                        case 1:
+                            System.out.println("Jugadores:");
+                            for (Jugador jugador : jugadores) {
+                                String jugadorString = jugador.getId() + ". " + jugador.getNombre() +
+                                        " " +
+                                        jugador.getApellido() +
+                                        " Edad: " +
+                                        jugador.getEdad() +
+                                        " Goles:" +
+                                        jugador.getGoles() +
+                                        " Asistencias: " +
+                                        jugador.getAsistencias() +
+                                        " Posicion: " +
+                                        jugador.getPosicion();
+                                System.out.println(jugadorString);
+                            }
+                            break;
+                        case 2:
+                            System.out.println("Agregar jugador:");
+
+                            break;
+                        default:
+                            System.out.println("Opción no válida. Intente de nuevo.");
+                            break;
+                    }
+
+
+                    break;
+                case 3:
                     System.out.println("1. Ver equipos");
                     System.out.println("2. Agregar equipo");
                     System.out.println("3. Modificar Equipo");
                     int equipoOption = scanner.nextInt();
+                    scanner.nextLine();
 
                     switch (equipoOption) {
                         case 1:
@@ -89,46 +127,12 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Ingrese el ID del equipo que desea modificar:");
+                            System.out.println("FALTA LOGICA DE MODIFICACION DE EQUIPO");
                             break;
                         default:
                             System.out.println("Opción no válida. Intente de nuevo.");
                             break;
                     }
-                    break;
-                case 3:
-                    System.out.println("1. Ver jugadores");
-                    System.out.println("2. Agregar jugador");
-
-                    int jugadorOption = scanner.nextInt();
-
-                    switch (jugadorOption) {
-                        case 1:
-                            System.out.println("Jugadores:");
-                            for (Jugador jugador : jugadores) {
-                                String jugadorStringBuilder = jugador.getId() + ". " + jugador.getNombre() +
-                                        " " +
-                                        jugador.getApellido() +
-                                        " Edad: " +
-                                        jugador.getEdad() +
-                                        " Goles:" +
-                                        jugador.getGoles() +
-                                        " Asistencias: " +
-                                        jugador.getAsistencias() +
-                                        " Posicion: " +
-                                        jugador.getPosicion();
-                                System.out.println(jugadorStringBuilder);
-                            }
-                            break;
-                        case 2:
-                            System.out.println("Agregar jugador:");
-
-                            break;
-                        default:
-                            System.out.println("Opción no válida. Intente de nuevo.");
-                            break;
-                    }
-
-
                     break;
                 case 4:
 
@@ -324,7 +328,11 @@ public class Main {
 
     private static void crearEquipo(Scanner scanner) {
 
+
+
         System.out.println("Ingrese el nombre del equipo:");
+        System.out.println();
+
         String nombre = scanner.nextLine();
 
 
@@ -339,16 +347,40 @@ public class Main {
 
 
         /* creo el equipo */
-        Equipo equipo = new Equipo(Utilidades.generarId(), nombre);
+        Equipo equipo = new Equipo(Utilidades.generarIdUnicaEn(equipos), nombre);
         equipos.add(equipo);
-        System.out.println("Equipo creado: " + equipo);
+        System.out.println("Equipo creado: " + equipo.getNombre());
 
-          /*  try (BufferedWriter writer = new BufferedWriter(new FileWriter("./equipos.txt", true))) {
-                writer.write(equipo.toString());
-                writer.newLine();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }*/
+        System.out.println("\n¿Que jugadores queres agregar al equipo?\n ");
+
+        for (Jugador jugador : jugadores) {
+            System.out.println(jugador.getId() + ". " + jugador.getNombre() + " " + jugador.getApellido());
+        }
+
+        while (equipo.getJugadores().size() < 5) {
+
+
+            System.out.println("\nIngresa el ID del jugador que deseas agregar al equipo:");
+
+            int jugadorId = scanner.nextInt();
+
+            for (Jugador jugador : jugadores) {
+                if (jugador.getId() == jugadorId) {
+                    boolean fueAgregado = equipo.agregarJugador(jugador);
+                    if(fueAgregado) {
+                        System.out.println("Jugador agregado: " + jugador.getNombre() + " " + jugador.getApellido());
+                    }
+                    break;
+                }
+            }
+
+        }
+
+
+        System.out.println("\nEquipo completado!\n");
+        System.out.println(equipo.formacion());
+
+        Utilidades.escribirArchivo("./equipos.txt", equipo.toFileString(), false);
     }
 
 

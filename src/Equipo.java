@@ -87,17 +87,21 @@ public class Equipo implements TieneId {
         return equipoStringBuilder.toString();
     }
 
-    public void agregarJugador(Jugador jugador) {
+    public boolean agregarJugador(Jugador jugador) {
         if (jugadores.size() == 5) {
             System.out.println("El equipo ya tiene 5 jugadores, no se pueden agregar más.");
-            return;
+            return false;
         }
         if (jugadores.contains(jugador)) {
             System.out.println("El jugador " + jugador.getNombre() + " " + jugador.getApellido() + " ya está en el equipo.");
-            return;
+            return false;
         }
 
+
+
         jugadores.add(jugador);
+
+        return true;
     }
 
 
