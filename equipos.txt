@@ -8,3 +8,5 @@ id:7;nombre:Equipo 7;golesMarcados:0;golesRecibidos:0;torneosJugados:2;torneosGa
 id:8;nombre:Equipo 8;golesMarcados:0;golesRecibidos:0;torneosJugados:0;torneosGanados:0;jugadoresIds:[36,37,38,39,40]
 id:266;nombre:La seleccion;golesMarcados:0;golesRecibidos:0;torneosJugados:2;torneosGanados:2;jugadoresIds:[39,1,5,6,7]
 id:846;nombre:Mmaic;golesMarcados:0;golesRecibidos:0;torneosJugados:1;torneosGanados:0;jugadoresIds:[4,5,8,10,11]
+id:959;nombre:River Plate;golesMarcados:0;golesRecibidos:0;torneosJugados:0;torneosGanados:0;jugadoresIds:[80581,40,39,38,27]
+

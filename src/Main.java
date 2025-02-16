@@ -111,7 +111,22 @@ public class Main {
                             break;
                         case 2:
                             System.out.println("Agregar jugador:");
+                            System.out.println("Ingrese el nombre del jugador:");
+                            String nombre = scanner.nextLine();
+                            System.out.println("Ingrese el apellido del jugador:");
+                            String apellido = scanner.nextLine();
+                            System.out.println("Ingrese la edad del jugador:");
+                            int edad = scanner.nextInt();
+                            scanner.nextLine(); // Consumir el salto de línea
+                            System.out.println("Ingrese la posición del jugador (arquero, defensor, delantero):");
+                            String posicion = scanner.nextLine();
 
+                            Jugador nuevoJugador = new Jugador(Utilidades.generarId(), nombre, apellido, edad, 0, 0, posicion);
+                            jugadores.add(nuevoJugador);
+                            System.out.println("Jugador agregado: " + nuevoJugador.getNombre() + " " + nuevoJugador.getApellido());
+
+                            // Guardar el nuevo jugador en el archivo
+                            Utilidades.escribirArchivo("./jugadores.txt", nuevoJugador.toFileString() + "\n", true);
                             break;
                         default:
                             System.out.println("Opción no válida. Intente de nuevo.");
@@ -139,11 +154,79 @@ public class Main {
                             break;
                         case 3:
                             System.out.println("Ingrese el ID del equipo que desea modificar:");
-                            System.out.println("FALTA LOGICA DE MODIFICACION DE EQUIPO");
-                            break;
-                        default:
-                            System.out.println("Opción no válida. Intente de nuevo.");
-                            break;
+
+                            int equipoId = scanner.nextInt();
+                            scanner.nextLine();
+                            Equipo equipoAModificar = null;
+
+                            for (Equipo equipo : equipos) {
+                                if (equipo.getId() == equipoId) {
+                                    equipoAModificar = equipo;
+                                    break;
+                                }
+                            }
+
+                            if (equipoAModificar == null) {
+                                System.out.println("ID de equipo no válido.");
+                                break;
+                            }
+
+                            System.out.println("Equipo encontrado: " + equipoAModificar.getNombre());
+                            System.out.println("1. Modificar nombre del equipo");
+                            System.out.println("2. Agregar jugador al equipo");
+                            System.out.println("3. Eliminar jugador del equipo");
+                            int modificarOption = scanner.nextInt();
+                            scanner.nextLine();
+
+                            switch (modificarOption) {
+                                case 1:
+                                    System.out.println("Ingrese el nuevo nombre del equipo:");
+                                    String nuevoNombre = scanner.nextLine();
+                                    equipoAModificar.setNombre(nuevoNombre);
+                                    System.out.println("Nombre del equipo actualizado a: " + nuevoNombre);
+                                    break;
+                                case 2:
+                                    System.out.println("Jugadores disponibles para agregar:");
+                                    for (Jugador jugador : jugadores) {
+                                        if (!equipoAModificar.getJugadores().contains(jugador)) {
+                                            System.out.println(jugador.getId() + ". " + jugador.getNombre() + " " + jugador.getApellido());
+                                        }
+                                    }
+                                    System.out.println("Ingrese el ID del jugador que desea agregar:");
+                                    int jugadorIdAgregar = scanner.nextInt();
+                                    scanner.nextLine();
+                                    Jugador jugadorAgregar = null;
+                                    for (Jugador jugador : jugadores) {
+                                        if (jugador.getId() == jugadorIdAgregar) {
+                                            jugadorAgregar = jugador;
+                                            break;
+                                        }
+                                    }
+                                    if (jugadorAgregar != null && equipoAModificar.agregarJugador(jugadorAgregar)) {
+                                        System.out.println("Jugador agregado: " + jugadorAgregar.getNombre() + " " + jugadorAgregar.getApellido());
+                                    } else {
+                                        System.out.println("No se pudo agregar el jugador.");
+                                    }
+                                    break;
+                                case 3:
+                                    System.out.println("Jugadores en el equipo:");
+                                    for (Jugador jugador : equipoAModificar.getJugadores()) {
+                                        System.out.println(jugador.getId() + ". " + jugador.getNombre() + " " + jugador.getApellido());
+                                    }
+                                    System.out.println("Ingrese el ID del jugador que desea eliminar:");
+                                    int jugadorIdEliminar = scanner.nextInt();
+                                    scanner.nextLine();
+                                    Jugador jugadorEliminar = equipoAModificar.getJugadorPorId(jugadorIdEliminar);
+                                    if (jugadorEliminar != null) {
+                                        equipoAModificar.eliminarJugador(jugadorEliminar);
+                                        System.out.println("Jugador eliminado: " + jugadorEliminar.getNombre() + " " + jugadorEliminar.getApellido());
+                                    } else {
+                                        System.out.println("No se pudo eliminar el jugador.");
+                                    }
+                                    break;
+                                default:
+                                    System.out.println("Opción no válida. Intente de nuevo.");
+                                    break;
                     }
                     break;
                 case 4:
@@ -157,7 +240,7 @@ public class Main {
             }
         }
     }
-
+    }
     private static void verHistorialDeTorneos() {
         try {
             ArrayList<String> lineas = Utilidades.leerArchivo("./torneos.txt");
@@ -406,34 +489,8 @@ public class Main {
 
         Utilidades.escribirArchivo("./equipos.txt", equipo.toFileString() + "\n", true);
     }
-
-
-    public static void ingresarJugadores(Equipo equipo) {
-        Scanner scanner = new Scanner(System.in);
-
-        System.out.println("¿Cuántos jugadores deseas agregar?");
-        int numJugadores = scanner.nextInt();
-        scanner.nextLine(); // es para que el siguiente ingreso no tome el salto de linea que se produce al presionar enter
-
-        for (int i = 0; i < numJugadores; i++) {
-            System.out.println("Ingrese el nombre del jugador:");
-            String nombre = scanner.nextLine();
-            System.out.println("Ingrese el apellido del jugador:");
-            String apellido = scanner.nextLine();
-            System.out.println("Ingrese la edad del jugador:");
-            int edad = scanner.nextInt();
-            System.out.println("Ingrese la posicion del jugador (arquero, defensor, delantero):");
-            String posicion = scanner.nextLine();
-
-
-            Jugador jugador = new Jugador(Utilidades.generarId(), nombre, apellido, edad, 0, 0, posicion);
-            equipo.agregarJugador(jugador);
-        }
-
-        System.out.println("Jugadores agregados:");
-        System.out.println(equipo.formacion());
     }
-}
+
 
 
 

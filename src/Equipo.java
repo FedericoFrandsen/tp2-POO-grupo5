@@ -171,6 +171,8 @@ public class Equipo implements TieneId {
         this.torneosGanados++;
     }
 
+    public void setNombre(String nombre) {this.nombre = nombre;}
+
     public Jugador getJugadorPorId(int id) {
         for (Jugador jugador : jugadores) {
             if (jugador.getId() == id) {
