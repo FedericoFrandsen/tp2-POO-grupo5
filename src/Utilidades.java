@@ -30,6 +30,15 @@ public class Utilidades {
         } while (true);
     }
 
+    /**
+     * Busca un objeto en una lista por su ID.
+     *
+     * @param lista Lista de objetos que implementan la interfaz `ConId`
+     * @param id    ID del objeto a buscar
+     * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
+     * @return Objeto de la lista con el ID pasado como parametro.
+     * @throws RuntimeException en caso de que no se encuentre el objeto con el ID pasado como parametro.
+     */
     public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) {
         T encontrado = null;
         for (T elemento : lista) {
@@ -94,6 +103,11 @@ public class Utilidades {
     }
 
 
+    /**
+     * Convierte un string con un formato especial en un HashMap<String, String> donde las claves son los atributos y los valores son los valores de los atributos.
+     * @param cadena string con formato `nombreDeAtributo`:`valorDeAtributo`;`nombreDeAtributo`:`valorDeAtributo`;...
+     * @return HashMap<String, String> con los atributos y valores del string pasado como parametro.
+     */
     public static HashMap<String, String> stringToMap(String cadena) {
         if (cadena.trim().isEmpty()) {
             throw new IllegalArgumentException("El string no puede ser nulo o vacío");
