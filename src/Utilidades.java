@@ -113,9 +113,9 @@ public class Utilidades {
             throw new IllegalArgumentException("El string no puede ser nulo o vacío");
         }
 
-        // El string llega en este formato -> "nombre:Equipo 1;golesMarcados:7;golesRecibidos:1"
+        // El string llega en este formato -> `nombreDeAtributo`:`valorDeAtributo`;`nombreDeAtributo`:`valorDeAtributo`;
         String[] atributos = cadena.split(";");
-        // atributos -> [ "nombre:Equipo 1", "golesMarcados:7", "golesRecibidos:1" ]
+        // atributos -> [ "nombreDeAtributo:valorAtributo", ... ]
 
         // creamos un hashMap para guardar los datos que extraemos del string
 
@@ -127,7 +127,7 @@ public class Utilidades {
             if (index == -1) {
                 throw new IllegalArgumentException("Formato incorrecto en el atributo: " + atributo);
             }
-            // Los atributos estan en este formato [nombreDeAtributo]:[valorDeAtributo]
+            // Los atributos estan en este formato `nombreDeAtributo:valorDeAtributo`
             // agarramos el nombre del atributo, que es todo lo que esta antes de los dos puntos
             // para hacerlo usamos substring que recibe dos indices, el primero desde que parte del string y el segundo hasta donde corta.
             String nombreDelAtributo = atributo.substring(0, atributo.indexOf(":"));
