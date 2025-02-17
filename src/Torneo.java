@@ -1,67 +1,141 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Torneo {
     private String nombre;
-    private Equipo[] equipos;
-    private Partido[] partidos;
-    // Los partidos tendrían que tener una estructura algo asi:
-    //  Partido 1: Equipo 1 vs. Equipo 2
-    //  Partido 2: Equipo 3 vs. Equipo 4
-    //  Partido 3: Equipo 5 vs. Equipo 6
-    //  Partido 4: Equipo 7 vs. Equipo 8
-    //      Partido 5: Ganador 1 vs. Ganador 2
-    //      Partido 6: Ganador 3 vs. Ganador 4
-    //          Partido 7: Ganador 5 vs. Ganador 6
-    private int numEquipos;
-    private int numPartidos;
+    private OrganizadorDePartidos organizadorDePartidos;
+    private ArrayList<Equipo> equipos = new ArrayList<>();
+    private Equipo equipoGanador = null;
     private Jugador maximoGoleador;
     private Jugador maximoAsistidor;
 
     public Torneo(String nombre) {
         this.nombre = nombre;
-        this.equipos = new Equipo[10]; // Suponiendo un máximo de 10 equipos por torneo
-        this.partidos = new Partido[10]; // Suponiendo un máximo de 10 partidos por torneo
-        this.numEquipos = 0;
-        this.numPartidos = 0;
+        this.organizadorDePartidos = new OrganizadorDePartidos(this);
     }
 
     public void agregarEquipo(Equipo equipo) {
-        if (numEquipos < equipos.length) {
-            equipos[numEquipos++] = equipo;
+        if (equipos.size() == 8) {
+            System.out.println("El torneo ya tiene 8 equipos, no se pueden agregar más.");
+            return;
+        }
+        if (equipos.contains(equipo)) {
+            System.out.println("El equipo " + equipo.getNombre() + " ya está en el torneo.");
+            return;
+        }
+        equipos.add(equipo);
+    }
+
+    public void iniciarTorneo() throws RuntimeException {
+        if (equipos.size() == 8) {
+            // aca hacemos una copia de la lista porque el organizador de partidos la va a modificar
+            // y no queremos que se modifique la lista original
+            // el (ArrayList<Equipo>) es un cast, porque el metodo .clone() devuelve un tipo Object
+            organizadorDePartidos.setEquiposParaSortear((ArrayList<Equipo>) equipos.clone());
+
+        } else {
+            throw new RuntimeException("El torneo no puede iniciar, se necesitan 8 equipos");
+
         }
     }
 
-    public void eliminarEquipo(Equipo equipo) {
-        for (int i = 0; i < numEquipos; i++) {
-            if (equipos[i].equals(equipo)) {
-                equipos[i] = equipos[--numEquipos];
-                equipos[numEquipos] = null;
-                break;
+
+    public String toFileString() {
+        if (equipoGanador == null) {
+            throw new RuntimeException("El torneo no ha finalizado, no se puede guardar en archivo.");
+        }
+
+        StringBuilder torneoStringBuilder = new StringBuilder("nombre:" + nombre)
+                .append(";equipoGanadorId:")
+                .append(equipoGanador.getId())
+                .append(";maximoGoleador:");
+
+        if (maximoGoleador == null) {
+
+            torneoStringBuilder.append("No hubo goles");
+
+        } else {
+
+            torneoStringBuilder.append(maximoGoleador.getNombre()).append(" ").append(maximoGoleador.getApellido());
+        }
+
+        torneoStringBuilder.append(";maximoAsistidor:");
+
+        if (maximoAsistidor == null) {
+
+            torneoStringBuilder.append("No hubo asistencias");
+
+        } else {
+
+            torneoStringBuilder.append(maximoAsistidor.toFileString()).append(" ").append(maximoAsistidor.getApellido());
+
+        }
+
+        torneoStringBuilder.append(";equiposIds:[");
+
+        for (Equipo equipo : equipos) {
+
+            torneoStringBuilder.append(equipo.getId());
+
+            if (equipos.indexOf(equipo) != equipos.size() - 1) {
+
+                torneoStringBuilder.append(",");
+
             }
         }
+
+        torneoStringBuilder.append("]\n");
+
+        return torneoStringBuilder.toString();
     }
 
-    public void sortearEnfrentamientos() {
-        numPartidos = 0;
-        for (int i = 0; i < numEquipos; i += 2) {
-            if (i + 1 < numEquipos) {
-                partidos[numPartidos++] = new Partido(equipos[i], equipos[i + 1]);
+    public void finalizarTorneo() {
+        ArrayList<Partido> partidosJugados = this.organizadorDePartidos.getPartidosJugados();
+
+        for (Partido partido : partidosJugados) {
+            for (Gol gol : partido.getGolesLocal()) {
+                if (maximoGoleador == null || gol.getGoleador().getGoles() > maximoGoleador.getGoles()) {
+                    maximoGoleador = gol.getGoleador();
+                }
+            }
+            for (Gol gol : partido.getGolesVisitante()) {
+                if (maximoGoleador == null || gol.getGoleador().getGoles() > maximoGoleador.getGoles()) {
+                    maximoGoleador = gol.getGoleador();
+                }
             }
         }
-    }
 
-    public void ingresarGoles(Partido partido, Jugador goleador, Jugador asistidor) {
-        goleador.setGoles(goleador.getGoles() + 1);
-        asistidor.setAsistencias(asistidor.getAsistencias() + 1);
-        partido.agregarGol(goleador, asistidor);
-    }
-
-    public void finalizarPartido(Partido partido, Equipo ganador) {
-        eliminarEquipo(partido.getEquipoLocal().equals(ganador) ? partido.getEquipoVisitante() : partido.getEquipoLocal());
-        if (numEquipos > 1) {
-            sortearEnfrentamientos();
+        for (Partido partido : partidosJugados) {
+            for (Gol gol : partido.getGolesLocal()) {
+                if (maximoAsistidor == null || gol.getAsistidor().getAsistencias() > maximoAsistidor.getAsistencias()) {
+                    maximoAsistidor = gol.getAsistidor();
+                }
+            }
+            for (Gol gol : partido.getGolesVisitante()) {
+                if (maximoAsistidor == null || gol.getAsistidor().getAsistencias() > maximoAsistidor.getAsistencias()) {
+                    maximoAsistidor = gol.getAsistidor();
+                }
+            }
         }
+
+        for (Equipo equipo : this.equipos) {
+            equipo.incrementarTorneosJugados();
+        }
+
+        this.equipoGanador = this.organizadorDePartidos.getEquiposParaSortear().getFirst();
+
+        this.equipoGanador.incrementarTorneosGanados();
     }
+
+
+    public void guardarEnArchivo() {
+        Utilidades.escribirArchivo("torneos.txt", this.toFileString(), true);
+    }
+
 
     public Jugador obtenerMaximoGoleador() {
+
+
         // Implementación para obtener el máximo goleador
         return maximoGoleador;
     }
@@ -71,18 +145,34 @@ public class Torneo {
         return maximoAsistidor;
     }
 
-    public Equipo obtenerEquipoCampeon() {
-        if (numEquipos == 1) {
-            return equipos[0];
-        }
-        return null;
+    public Equipo getEquipoGanador() {
+        return this.equipoGanador;
     }
-    public Partido[] getPartidos() {
-        return partidos;
+
+    public OrganizadorDePartidos getOrganizadorDePartidos() {
+        return organizadorDePartidos;
+    }
+
+    public void setEquipoGanador(Equipo equipoGanador) throws RuntimeException {
+        if (this.organizadorDePartidos.hayPartidosPendientes()) {
+            throw new RuntimeException("No se puede definir un equipo ganador si hay partidos pendientes.");
+
+        }
+
+        this.equipoGanador = equipoGanador;
     }
 
     public String getNombre() {
         return nombre;
     }
+
+    public int getCantidadDeEquipos() {
+        return equipos.size();
+    }
+
+    public List<Equipo> getEquipos() {
+        return equipos;
+    }
+
 }
 
