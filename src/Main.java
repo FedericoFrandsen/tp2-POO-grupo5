@@ -356,37 +356,63 @@ public class Main {
                                 System.out.println("1) " + partido.getEquipoLocal().getNombre());
                                 System.out.println("2) " + partido.getEquipoVisitante().getNombre());
                                 int equipoQueHizoElGol = scanner.nextInt();
+                                Jugador goleador = null;
+                                Jugador asistidor = null;
                                 if (equipoQueHizoElGol == 1) {
                                     System.out.println("¿Quién hizo el gol?");
                                     System.out.println("Jugadores:");
-                                    //  Falta validar que ingrese un ID valido.
+
                                     for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
                                         System.out.println(jugador.getId() + ") " + jugador.getNombre() + " " + jugador.getApellido());
                                     }
-                                    int idJugadorGoleador = scanner.nextInt();
-                                    Jugador goleador = partido.getEquipoLocal().getJugadorPorId(idJugadorGoleador);
+
+                                    while (goleador == null) {
+                                        int idJugadorGoleador = scanner.nextInt();
+                                        goleador = partido.getEquipoLocal().getJugadorPorId(idJugadorGoleador);
+                                        if (goleador == null) {
+                                            System.out.println("ID de jugador no válido. Intente de nuevo.");
+                                        }
+                                    }
                                     System.out.println("¿Quién asistio en el gol?");
                                     System.out.println("Jugadores:");
                                     for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
                                         System.out.println(jugador.getId() + ") " + jugador.getNombre() + " " + jugador.getApellido());
                                     }
-                                    Jugador asistidor = partido.getEquipoLocal().getJugadorPorId(scanner.nextInt());
+                                    while (asistidor == null) {
+                                        int idJugadorAsistidor = scanner.nextInt();
+                                        asistidor = partido.getEquipoLocal().getJugadorPorId(idJugadorAsistidor);
+                                        if (asistidor == null) {
+                                            System.out.println("ID de jugador no válido. Intente de nuevo.");
+                                        }
+                                    }
                                     partido.agregarGolLocal(goleador, asistidor);
+
                                 } else if (equipoQueHizoElGol == 2) {
                                     System.out.println("¿Quién hizo el gol?");
                                     System.out.println("Jugadores:");
-                                    //  Falta validar que ingrese un ID valido.
                                     for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
                                         System.out.println(jugador.getId() + ") " + jugador.getNombre() + " " + jugador.getApellido());
                                     }
-                                    int idJugadorGoleador = scanner.nextInt();
-                                    Jugador goleador = partido.getEquipoVisitante().getJugadorPorId(idJugadorGoleador);
+                                    while (goleador == null) {
+                                        int idJugadorGoleador = scanner.nextInt();
+                                        goleador = partido.getEquipoVisitante().getJugadorPorId(idJugadorGoleador);
+                                        if (goleador == null) {
+                                            System.out.println("ID de jugador no válido. Intente de nuevo.");
+                                        }
+                                    }
+
                                     System.out.println("¿Quién asistio en el gol?");
                                     System.out.println("Jugadores:");
                                     for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
                                         System.out.println(jugador.getId() + ") " + jugador.getNombre() + " " + jugador.getApellido());
                                     }
-                                    Jugador asistidor = partido.getEquipoVisitante().getJugadorPorId(scanner.nextInt());
+                                    while (asistidor == null) {
+                                        int idJugadorAsistidor = scanner.nextInt();
+                                        asistidor = partido.getEquipoVisitante().getJugadorPorId(idJugadorAsistidor);
+                                        if (asistidor == null) {
+                                            System.out.println("ID de jugador no válido. Intente de nuevo.");
+                                        }
+                                    }
                                     partido.agregarGolVisitante(goleador, asistidor);
                                 } else {
                                     System.out.println("Opción no válida");
