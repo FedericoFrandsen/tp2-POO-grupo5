@@ -101,8 +101,10 @@ public class Main {
                             System.out.println("+-----------------------------------+");
                             System.out.println("|          Lista de Jugadores        |");
                             System.out.println("+-----------------------------------+");
+                            System.out.printf("| %-20s |%-10s |%-10s | %-10s |%-10s |%n", "Nombre", "Apellido","Posición","Asistencias","Goles");
+                            System.out.printf("| %-20s |%-10s |%-10s | %-10s |%-10s |%n", "=======", "========","========","========","========");
                             for (Jugador jugador : jugadores) {
-                                System.out.printf("| %-20s | %-10s |%n", jugador.getNombre(), jugador.getPosicion());
+                                System.out.printf("| %-20s |%-10s |%-10s | %-10s |%-10s |%n", jugador.getNombre(),jugador.getApellido(), jugador.getPosicion(), jugador.getAsistencias(), jugador.getGoles());
                             }
                             System.out.println("+-----------------------------------+");
                             break;
