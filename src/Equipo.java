@@ -11,9 +11,13 @@ public class Equipo implements TieneId {
     private int torneosJugados = 0;
     private int torneosGanados = 0;
 
-    public Equipo(int id,String nombre) {
+    public Equipo(int id,String nombre, int golesMarcados, int golesRecibidos, int torneosJugados, int torneosGanados) {
         this.id = id;
         this.nombre = nombre;
+        this.golesMarcados = golesMarcados;
+        this.golesRecibidos = golesRecibidos;
+        this.torneosJugados = torneosJugados;
+        this.torneosGanados = torneosGanados;
     }
 
     /**
@@ -30,7 +34,7 @@ public class Equipo implements TieneId {
         var atributosMap = Utilidades.stringToMap(equipoString);
 
         // Creamos una instancia del equipo con los valores extraidos del string.
-        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"));
+        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"), 0, 0, 0, 0);
 
 
         String jugadoresString = atributosMap.get("jugadoresIds");

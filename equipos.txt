@@ -9,3 +9,5 @@ id:8;nombre:Equipo 8;golesMarcados:0;golesRecibidos:0;torneosJugados:1;torneosGa
 id:266;nombre:La seleccion;golesMarcados:0;golesRecibidos:0;torneosJugados:2;torneosGanados:2;jugadoresIds:[39,1,5,6,7]
 id:846;nombre:Mmaic;golesMarcados:0;golesRecibidos:0;torneosJugados:2;torneosGanados:0;jugadoresIds:[4,5,8,10,11]
 id:959;nombre:River Plate;golesMarcados:0;golesRecibidos:0;torneosJugados:0;torneosGanados:0;jugadoresIds:[80581,40,39,38,27]
+id:731;nombre:Jumpsuit;golesMarcados:0;golesRecibidos:0;torneosJugados:0;torneosGanados:0;jugadoresIds:[39,3,9,24,29]
+id:883;nombre:Winter;golesMarcados:0;golesRecibidos:0;torneosJugados:0;torneosGanados:0;jugadoresIds:[478,2,5,7,30]

@@ -507,7 +507,7 @@ public class Main {
 
 
         /* creo el equipo */
-        Equipo equipo = new Equipo(Utilidades.generarIdUnicaEn(equipos), nombre);
+        Equipo equipo = new Equipo(Utilidades.generarIdUnicaEn(equipos), nombre, 0, 0, 0, 0);
         equipos.add(equipo);
         System.out.println("Equipo creado: " + equipo.getNombre());
 
@@ -518,22 +518,32 @@ public class Main {
         }
 
         while (equipo.getJugadores().size() < 5) {
+            boolean jugadorAgregado = false; // Bandera para saber si se agregó un jugador
 
+            while (!jugadorAgregado) {
+                System.out.println("\nIngresa el ID del jugador que deseas agregar al equipo:");
+                int jugadorId = scanner.nextInt();
+                scanner.nextLine(); // Consumir el salto de línea
 
-            System.out.println("\nIngresa el ID del jugador que deseas agregar al equipo:");
+                boolean jugadorEncontrado = false;
 
-            int jugadorId = scanner.nextInt();
-
-            for (Jugador jugador : jugadores) {
-                if (jugador.getId() == jugadorId) {
-                    boolean fueAgregado = equipo.agregarJugador(jugador);
-                    if (fueAgregado) {
-                        System.out.println("Jugador agregado: " + jugador.getNombre() + " " + jugador.getApellido());
+                for (Jugador jugador : jugadores) {
+                    if (jugador.getId() == jugadorId) {
+                        jugadorEncontrado = true;
+                        boolean fueAgregado = equipo.agregarJugador(jugador);
+                        if (fueAgregado) {
+                            System.out.println("Jugador agregado: " + jugador.getNombre() + " " + jugador.getApellido());
+                            jugadorAgregado = true;
+                        } else {
+                            System.out.println("No se pudo agregar el jugador. Verifica si ya pertenece al equipo o si cumple las restricciones.");
+                        }
+                        break;
                     }
-                    break;
+                }
+                if (!jugadorEncontrado) {
+                    System.out.println("Error: No existe un jugador con el ID " + jugadorId + ". Por favor, ingresa un ID válido.");
                 }
             }
-
         }
 
 
