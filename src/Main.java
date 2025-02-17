@@ -153,6 +153,10 @@ public class Main {
                             crearEquipo(scanner);
                             break;
                         case 3:
+                            System.out.println("Equipos disponibles:");
+                            for (Equipo equipo : equipos) {
+                                System.out.println("ID: " + equipo.getId() + " - " + equipo.getNombre());
+                            }
                             System.out.println("Ingrese el ID del equipo que desea modificar:");
 
                             int equipoId = scanner.nextInt();
