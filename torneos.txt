@@ -1,4 +1,3 @@
 nombre:Miou;equipoGanadorId:266;maximoGoleador:No hubo goles;maximoAsistidor:No hubo asistencias;equiposIds:[846,266,1,2,3,4,5,7]
 nombre:toneriu;equipoGanadorId:266;maximoGoleador:No hubo goles;maximoAsistidor:No hubo asistencias;equiposIds:[1,2,3,4,5,266,6,7]
-nombre:Vviner;equipoGanadorId:8;maximoGoleador:Javier Flores;maximoAsistidor:id:40;nombre:Felipe;apellido:Miranda;edad:28;goles:0;asistencias:2;posicion:defensor
- Miranda;equiposIds:[5,846,6,8,3,1,2,4]
+nombre:Vviner;equipoGanadorId:8;maximoGoleador:Javier Flores;maximoAsistidor:id:40;nombre:Felipe;apellido:Miranda;edad:28;goles:0;asistencias:2;posicion:defensor;equiposIds:[5,846,6,8,3,1,2,4]

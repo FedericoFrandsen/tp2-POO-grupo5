@@ -95,6 +95,11 @@ public class Utilidades {
         HashMap<String, String> atributosMap = new HashMap<>();
 
         for (String atributo : atributos) {
+            // Verificar que haya al menos un ":" en el atributo
+            int index = atributo.indexOf(":");
+            if (index == -1) {
+                throw new IllegalArgumentException("Formato incorrecto en el atributo: " + atributo);
+            }
             // Los atributos estan en este formato [nombreDeAtributo]:[valorDeAtributo]
             // agarramos el nombre del atributo, que es todo lo que esta antes de los dos puntos
             // para hacerlo usamos substring que recibe dos indices, el primero desde que parte del string y el segundo hasta donde corta.
