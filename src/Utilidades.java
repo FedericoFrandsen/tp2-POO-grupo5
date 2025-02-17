@@ -22,7 +22,7 @@ public class Utilidades {
         // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz ConId. Y como el parametro que pedimos es un
         // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente ConId.
         do {
-            int newId = random.nextInt(1000);
+            int newId = random.nextInt(10000);
             // revisamos que ninguno de los objetos presentes en la lista tenga el ID creado.
             if (lista.stream().noneMatch(e -> e.getId() == newId)) {
                 return newId;
