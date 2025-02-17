@@ -30,9 +30,22 @@ public class Utilidades {
         } while (true);
     }
 
-    public static int generarId() {
-        return random.nextInt(10000);
+    public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) {
+        T encontrado = null;
+        for (T elemento : lista) {
+            if (elemento.getId() == id) {
+                encontrado = elemento;
+                break;
+            }
+        }
+
+        if (encontrado == null) {
+            throw new RuntimeException("No se encontró el elemento con id: " + id);
+        }
+
+        return encontrado;
     }
+
 
     /**
      * Escribe un archivo con el contenido pasado como parametro. (Siempre sobreescribe el contenido anterior)

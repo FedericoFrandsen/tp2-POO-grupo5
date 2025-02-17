@@ -179,18 +179,15 @@ public class Main {
 
                             int equipoId = scanner.nextInt();
                             scanner.nextLine();
-                            Equipo equipoAModificar = null;
+                            Equipo equipoAModificar;
+                            try {
 
-                            for (Equipo equipo : equipos) {
-                                if (equipo.getId() == equipoId) {
-                                    equipoAModificar = equipo;
-                                    break;
-                                }
-                            }
+                                equipoAModificar = Utilidades.buscarPorIdEnLista(equipos, equipoId);
 
-                            if (equipoAModificar == null) {
+                            } catch (RuntimeException e) {
                                 System.out.println("ID de equipo no válido.");
                                 break;
+
                             }
 
                             System.out.println("+-------------------------------------------+");

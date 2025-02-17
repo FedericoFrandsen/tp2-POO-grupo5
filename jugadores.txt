@@ -1,5 +1,5 @@
-id:1;nombre:Juan;apellido:Perez;edad:25;goles:0;asistencias:0;posicion:delantero
-id:2;nombre:Pedro;apellido:Gomez;edad:28;goles:0;asistencias:0;posicion:defensor
+id:1;nombre:Juan;apellido:Perez;edad:25;goles:1;asistencias:0;posicion:delantero
+id:2;nombre:Pedro;apellido:Gomez;edad:28;goles:0;asistencias:1;posicion:defensor
 id:3;nombre:Carlos;apellido:Lopez;edad:30;goles:0;asistencias:0;posicion:arquero
 id:4;nombre:Andres;apellido:Martinez;edad:27;goles:0;asistencias:0;posicion:delantero
 id:5;nombre:Jose;apellido:Garcia;edad:26;goles:0;asistencias:0;posicion:defensor
@@ -40,6 +40,4 @@ id:39;nombre:Benjamin;apellido:Varela;edad:27;goles:1;asistencias:0;posicion:del
 id:40;nombre:Felipe;apellido:Miranda;edad:28;goles:0;asistencias:2;posicion:defensor
 id:80581;nombre:Francisco;apellido:Albarracin;edad:22;goles:0;asistencias:0;posicion:delantero
 id:590;nombre:Felipe Arturo;apellido:Manso;edad:27;goles:0;asistencias:0;posicion:j
-
 id:478;nombre:Ariel;apellido:Greco;edad:23;goles:0;asistencias:0;posicion:arquero
-
