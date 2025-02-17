@@ -60,7 +60,22 @@ public class Jugador extends Persona implements TieneId {
                 ";posicion:" +
                 this.getPosicion()+
                 "\n";
-        }
+    }
+
+
+    public String toString() {
+        return this.getId() + ". " + this.getNombre() +
+                " " +
+                this.getApellido() +
+                " Edad: " +
+                this.getEdad() +
+                " Goles:" +
+                this.getGoles() +
+                " Asistencias: " +
+                this.getAsistencias() +
+                " Posicion: " +
+                this.getPosicion();
+    }
 
     public void incrementarGoles() {
         this.goles++;

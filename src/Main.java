@@ -11,7 +11,7 @@ public class Main {
 
     public static void main(String[] args) {
         try {
-
+            // En este bloque de codigo cargamos los jugadores guardados en un archivo en memoria para poder acceder a ellos.
             ArrayList<String> lineasJugadores = Utilidades.leerArchivo("./jugadores.txt");
 
             for (String line : lineasJugadores) {
@@ -24,6 +24,7 @@ public class Main {
                 jugadores.add(jugador);
             }
 
+            // Aca cargamos los equipos guardados en un archivo en memoria para poder acceder a ellos en el programa..
             ArrayList<String> lineasEquipos = Utilidades.leerArchivo("./equipos.txt");
 
             for (String line : lineasEquipos) {
@@ -43,8 +44,6 @@ public class Main {
 
         }
 
-        System.out.println(equipos);
-        System.out.println(jugadores);
         System.out.println("Bienvenido al sistema de torneos de fútbol");
 
 
@@ -63,20 +62,20 @@ public class Main {
 
             switch (option) {
                 case 1:
-                    System.out.println("1. Ver historial de torneos");
-                    System.out.println("2. Empezar nuevo torneo");
+                    System.out.println("1. Empezar nuevo torneo");
+                    System.out.println("2. Ver historial de torneos");
                     int torneoOption = scanner.nextInt();
                     scanner.nextLine();
 
                     switch (torneoOption) {
                         case 1:
-                            verHistorialDeTorneos();
-                            break;
-                        case 2:
                             empezarNuevoTorneo(scanner);
                             break;
+                        case 2:
+                            verHistorialDeTorneos();
+                            break;
                         default:
-                            System.out.println("Opción no válida. Intente de nuevo.");
+                            System.out.println("Opción no válida. Por favor selecciona otra opcion.");
                     }
 
                     break;
@@ -92,19 +91,7 @@ public class Main {
                             System.out.println("Jugadores:");
                             for (Jugador jugador : jugadores) {
 
-                                String jugadorString = jugador.getId() + ". " + jugador.getNombre() +
-                                        " " +
-                                        jugador.getApellido() +
-                                        " Edad: " +
-                                        jugador.getEdad() +
-                                        " Goles:" +
-                                        jugador.getGoles() +
-                                        " Asistencias: " +
-                                        jugador.getAsistencias() +
-                                        " Posicion: " +
-                                        jugador.getPosicion();
-
-                                System.out.println(jugadorString);
+                                System.out.println(jugador);
                             }
                             break;
                         case 2:
