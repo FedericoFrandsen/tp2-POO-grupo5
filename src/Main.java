@@ -260,15 +260,16 @@ public class Main {
                                     break;
                             }
                             break;
-                        case 4:
 
-                            System.out.println("Muchas gracias por usar nuestro programa.");
-                            exit = true;
-                            scanner.close();
-                            break;
-                        default:
-                            System.out.println("Opción no válida. Intente de nuevo.");
                     }
+                case 4:
+
+                    System.out.println("Muchas gracias por usar nuestro programa.");
+                    exit = true;
+                    scanner.close();
+                    break;
+                default:
+                    System.out.println("Opción no válida. Intente de nuevo.");
             }
         }
     }
