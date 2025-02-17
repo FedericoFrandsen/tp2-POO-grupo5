@@ -111,10 +111,15 @@ public class Equipo implements TieneId {
     }
 
     public String formacion() {
-        StringBuilder formacion = new StringBuilder("Formación de " + nombre + ":\n");
+        StringBuilder formacion = new StringBuilder();
+        formacion.append("============================================\n");
+        formacion.append(String.format("Formación de %s:\n", nombre));
+        formacion.append(String.format("%-20s %-20s\n", "Nombre", "Apellido"));
+        formacion.append(String.format("%-20s %-20s\n", "--------------------", "--------------------"));
         for (Jugador jugador : jugadores) {
-            formacion.append(jugador.getNombre()).append(" ").append(jugador.getApellido()).append("\n");
+            formacion.append(String.format("%-20s %-20s\n", jugador.getNombre(), jugador.getApellido()));
         }
+        formacion.append("============================================\n");
         return formacion.toString();
     }
 

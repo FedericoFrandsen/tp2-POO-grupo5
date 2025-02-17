@@ -43,27 +43,35 @@ public class Main {
             throw new RuntimeException(e);
 
         }
-
+        System.out.println("------------------------------------");
         System.out.println("Bienvenido al sistema de torneos de fútbol");
+        System.out.println("------------------------------------");
 
 
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
 
         while (!exit) {
-            System.out.println("Elegi que recurso queres administrar:");
-            System.out.println("1. Torneos");
-            System.out.println("2. Jugadores");
-            System.out.println("3. Equipos");
-            System.out.println("4. Salir");
+            System.out.println("+-----------------------------------+");
+            System.out.println("|                                   |");
+            System.out.println("|  Elige qué recurso quieres administrar:  |");
+            System.out.println("|                                   |");
+            System.out.println("|   1. Torneos                     |");
+            System.out.println("|   2. Jugadores                   |");
+            System.out.println("|   3. Equipos                     |");
+            System.out.println("|   4. Salir                       |");
+            System.out.println("|                                   |");
+            System.out.println("+-----------------------------------+");
 
             int option = scanner.nextInt();
             scanner.nextLine(); // es para que el siguiente ingreso no tome el salto de línea que se produce al presionar enter
 
             switch (option) {
                 case 1:
-                    System.out.println("1. Empezar nuevo torneo");
-                    System.out.println("2. Ver historial de torneos");
+                    System.out.println("------------------------------------");
+                    System.out.println("|   1. Empezar nuevo torneo   |");
+                    System.out.println("|   2. Ver historial de torneos   |");
+                    System.out.println("------------------------------------");
                     int torneoOption = scanner.nextInt();
                     scanner.nextLine();
 
@@ -80,31 +88,52 @@ public class Main {
 
                     break;
                 case 2:
-                    System.out.println("1. Ver jugadores");
-                    System.out.println("2. Agregar jugador");
+                    System.out.println("+---------------------------+");
+                    System.out.println("| 1. Ver jugadores          |");
+                    System.out.println("| 2. Agregar jugador        |");
+                    System.out.println("+---------------------------+");
 
                     int jugadorOption = scanner.nextInt();
                     scanner.nextLine();
 
                     switch (jugadorOption) {
                         case 1:
-                            System.out.println("Jugadores:");
+                            System.out.println("+-----------------------------------+");
+                            System.out.println("|          Lista de Jugadores        |");
+                            System.out.println("+-----------------------------------+");
                             for (Jugador jugador : jugadores) {
-
-                                System.out.println(jugador);
+                                System.out.printf("| %-20s | %-10s |%n", jugador.getNombre(), jugador.getPosicion());
                             }
+                            System.out.println("+-----------------------------------+");
                             break;
                         case 2:
-                            System.out.println("Agregar jugador:");
-                            System.out.println("Ingrese el nombre del jugador:");
+                            System.out.println("+-----------------------------------+");
+                            System.out.println("|         Agregar Nuevo Jugador      |");
+                            System.out.println("+-----------------------------------+");
+                            System.out.println("| Ingrese el nombre del jugador:    |");
+                            System.out.print("| > ");
                             String nombre = scanner.nextLine();
-                            System.out.println("Ingrese el apellido del jugador:");
+                            System.out.println("| Ingrese el apellido del jugador:   |");
+                            System.out.print("| > ");
                             String apellido = scanner.nextLine();
-                            System.out.println("Ingrese la edad del jugador:");
+                            System.out.println("| Ingrese la edad del jugador:       |");
+                            System.out.print("| > ");
                             int edad = scanner.nextInt();
                             scanner.nextLine(); // Consumir el salto de línea
-                            System.out.println("Ingrese la posición del jugador (arquero, defensor, delantero):");
-                            String posicion = scanner.nextLine();
+                            System.out.println("| Ingrese la posición del jugador:   |");
+                            System.out.println("| (arquero, defensor, delantero)     |");
+                            System.out.print("| > ");
+                            String posicion = scanner.nextLine().toLowerCase();
+
+                            // Validamos que la posición sea una de las permitidas
+                            while (!posicion.equals("arquero") &&
+                                    !posicion.equals("defensor") &&
+                                    !posicion.equals("delantero")) {
+                                System.out.println("Error: Posición no válida. Debe ser arquero, defensor o delantero.");
+                                System.out.println("Ingrese nuevamente la posición:");
+                                System.out.print("| > ");
+                                posicion = scanner.nextLine().toLowerCase();
+                            }
 
                             Jugador nuevoJugador = new Jugador(Utilidades.generarIdUnicaEn(jugadores), nombre, apellido, edad, 0, 0, posicion);
                             jugadores.add(nuevoJugador);
@@ -121,9 +150,11 @@ public class Main {
 
                     break;
                 case 3:
-                    System.out.println("1. Ver equipos");
-                    System.out.println("2. Agregar equipo");
-                    System.out.println("3. Modificar Equipo");
+                    System.out.println("------------------------------------");
+                    System.out.println("|   1. Ver equipos   |");
+                    System.out.println("|   2. Agregar equipo   |");
+                    System.out.println("|   3. Modificar Equipo   |");
+                    System.out.println("------------------------------------");
                     int equipoOption = scanner.nextInt();
                     scanner.nextLine();
 
@@ -160,10 +191,14 @@ public class Main {
                                 break;
                             }
 
-                            System.out.println("Equipo encontrado: " + equipoAModificar.getNombre());
-                            System.out.println("1. Modificar nombre del equipo");
-                            System.out.println("2. Agregar jugador al equipo");
-                            System.out.println("3. Eliminar jugador del equipo");
+                            System.out.println("+-------------------------------------------+");
+                            System.out.println("| Equipo encontrado: " + equipoAModificar.getNombre());
+                            System.out.println("+-------------------------------------------+");
+                            System.out.println("| 1. Modificar nombre del equipo            |");
+                            System.out.println("| 2. Agregar jugador al equipo              |");
+                            System.out.println("| 3. Eliminar jugador del equipo            |");
+                            System.out.println("+-------------------------------------------+");
+
                             int modificarOption = scanner.nextInt();
                             scanner.nextLine();
 
