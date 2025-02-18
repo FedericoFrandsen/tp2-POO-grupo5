@@ -13,14 +13,14 @@ public class Utilidades {
     /**
      * Genera un ID único para un objeto dentro de la lista pasada como parametro
      *
-     * @param lista Lista de objetos que implementan la interfaz `ConId`
-     * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
+     * @param lista Lista de objetos que implementan la interfaz `TieneId`
+     * @param <T>   Cualquier clase que implemente la interfaz `TieneId`.
      * @return int: ID no repetido en la lista pasada como argumento.
      */
     public static <T extends TieneId> int generarIdUnicaEn(ArrayList<T> lista) {
         // T es un parametro generico de Tipo, es decir establece condiciones para el tipo de dato que se puede recibir,
-        // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz ConId. Y como el parametro que pedimos es un
-        // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente ConId.
+        // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz TieneId. Y como el parametro que pedimos es un
+        // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente TieneId.
         do {
             int newId = random.nextInt(1000);
             // revisamos que ninguno de los objetos presentes en la lista tenga el ID creado.
@@ -33,13 +33,13 @@ public class Utilidades {
     /**
      * Busca un objeto en una lista por su ID.
      *
-     * @param lista Lista de objetos que implementan la interfaz `ConId`
+     * @param lista Lista de objetos que implementan la interfaz `TieneId`
      * @param id    ID del objeto a buscar
-     * @param <T>   Cualquier clase que implemente la interfaz `ConId`.
+     * @param <T>   Cualquier clase que implemente la interfaz `TieneId`.
      * @return Objeto de la lista con el ID pasado como parametro.
      * @throws RuntimeException en caso de que no se encuentre el objeto con el ID pasado como parametro.
      */
-    public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) {
+    public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) throws RuntimeException {
         T encontrado = null;
         for (T elemento : lista) {
             if (elemento.getId() == id) {

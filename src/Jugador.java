@@ -3,18 +3,23 @@ import java.util.HashMap;
 
 public class Jugador extends Persona implements TieneId {
 
-    private int goles;
-    private int asistencias;
-    private String posicion;
+    private int goles = 0;
+    private int asistencias = 0;
     private int id;
 
-    public Jugador(int id,String nombre, String apellido, int edad, int goles, int asistencias, String posicion) {
+
+    public Jugador(int id, String nombre, String apellido, int edad) {
         super(nombre, apellido, edad);
+        this.id = id;
+    }
+
+    public Jugador(int id,String nombre, String apellido, int edad, int goles, int asistencias) {
+        this(id, nombre, apellido, edad);
         this.id = id;
         this.goles = goles;
         this.asistencias = asistencias;
-        this.posicion = posicion;
     }
+
 
 
 
@@ -35,8 +40,7 @@ public class Jugador extends Persona implements TieneId {
                 atributosMap.get("apellido"),
                 Integer.parseInt(atributosMap.get("edad")),
                 Integer.parseInt(atributosMap.get("goles")),
-                Integer.parseInt(atributosMap.get("asistencias")),
-                atributosMap.get("posicion")
+                Integer.parseInt(atributosMap.get("asistencias"))
         );
     }
 
@@ -57,8 +61,6 @@ public class Jugador extends Persona implements TieneId {
                 this.getGoles() +
                 ";asistencias:" +
                 this.getAsistencias() +
-                ";posicion:" +
-                this.getPosicion()+
                 "\n";
     }
 
@@ -72,9 +74,7 @@ public class Jugador extends Persona implements TieneId {
                 " Goles:" +
                 this.getGoles() +
                 " Asistencias: " +
-                this.getAsistencias() +
-                " Posicion: " +
-                this.getPosicion();
+                this.getAsistencias();
     }
 
     public void incrementarGoles() {
@@ -98,14 +98,6 @@ public class Jugador extends Persona implements TieneId {
 
     public void setGoles(int goles) {
         this.goles = goles;
-    }
-
-    public void setPosicion(String posicion) {
-        this.posicion = posicion;
-    }
-
-    public String getPosicion() {
-        return posicion;
     }
 
     public int getAsistencias() {

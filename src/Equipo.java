@@ -11,13 +11,18 @@ public class Equipo implements TieneId {
     private int torneosJugados = 0;
     private int torneosGanados = 0;
 
-    public Equipo(int id,String nombre, int golesMarcados, int golesRecibidos, int torneosJugados, int torneosGanados) {
+    public Equipo(int id,String nombre) {
         this.id = id;
         this.nombre = nombre;
+    }
+
+    public Equipo(int id, String nombre, int golesMarcados, int golesRecibidos, int torneosJugados, int torneosGanados) {
+        this(id, nombre);
         this.golesMarcados = golesMarcados;
         this.golesRecibidos = golesRecibidos;
         this.torneosJugados = torneosJugados;
         this.torneosGanados = torneosGanados;
+
     }
 
     /**
@@ -26,7 +31,7 @@ public class Equipo implements TieneId {
      *     nombre:Equipo 1;golesMarcados:7;golesRecibidos:1
      * Este metodo lo usamos para convertir un string en un objeto Equipo, por ejemplo cuando leemos un archivo y queremos convertir los datos en Equipos.
      * @param equipoString String con los atributos del equipo.
-     * @param jugadores Lista de jugadores para poder asignarlos al equipo sin crear instancias duplicadas..
+     * @param jugadores Lista de jugadores para poder asignarlos al equipo sin crear instancias duplicadas.
      */
     public static Equipo fromString(String equipoString, ArrayList<Jugador> jugadores) {
 
@@ -34,27 +39,36 @@ public class Equipo implements TieneId {
         var atributosMap = Utilidades.stringToMap(equipoString);
 
         // Creamos una instancia del equipo con los valores extraidos del string.
-        Equipo equipo = new Equipo(Integer.parseInt(atributosMap.get("id")), atributosMap.get("nombre"), 0, 0, 0, 0);
+        Equipo equipo = new Equipo(
+                Integer.parseInt(atributosMap.get("id")),
+                atributosMap.get("nombre"),
+                Integer.parseInt(atributosMap.get("golesMarcados")),
+                Integer.parseInt(atributosMap.get("golesRecibidos")),
+                Integer.parseInt(atributosMap.get("torneosJugados")),
+                Integer.parseInt(atributosMap.get("torneosGanados"))
+        );
 
 
         String jugadoresString = atributosMap.get("jugadoresIds");
 
+        // Agarramos solo los ids de los jugadores, que estan en una string con este formato [id1,id2,id3,...]
+        // Entonces extraemos primero todo lo que esta entre corchetes ([]) y luego separamos los ids por comas.
         jugadoresString = jugadoresString.substring(jugadoresString.indexOf("[") + 1, jugadoresString.indexOf("]"));
+
         for (String jugadorId : jugadoresString.split(",")) {
 
-            for (Jugador jugador : jugadores) {
-                if (jugador.getId() == Integer.parseInt(jugadorId)) {
-                    equipo.agregarJugador(jugador);
-                    break;
-                }
+            try {
+                Jugador jugador = Utilidades.buscarPorIdEnLista(jugadores, Integer.parseInt(jugadorId));
+
+                equipo.agregarJugador(jugador);
+
+            } catch (RuntimeException e) {
+                System.out.println("Error al agregar jugador al equipo " + equipo.getNombre() + ": " + e.getMessage());
+
             }
 
-        }
 
-        equipo.setGolesMarcados(Integer.parseInt(atributosMap.get("golesMarcados")));
-        equipo.setGolesRecibidos(Integer.parseInt(atributosMap.get("golesRecibidos")));
-        equipo.setTorneosGanados(Integer.parseInt(atributosMap.get("torneosGanados")));
-        equipo.setTorneosJugados(Integer.parseInt(atributosMap.get("torneosJugados")));
+        }
 
 
         return equipo;
@@ -92,24 +106,24 @@ public class Equipo implements TieneId {
     }
 
     public boolean agregarJugador(Jugador jugador) {
+
         if (jugadores.size() == 5) {
             System.out.println("El equipo ya tiene 5 jugadores, no se pueden agregar más.");
             return false;
         }
+
         if (jugadores.contains(jugador)) {
             System.out.println("El jugador " + jugador.getNombre() + " " + jugador.getApellido() + " ya está en el equipo.");
             return false;
         }
-
-
 
         jugadores.add(jugador);
 
         return true;
     }
 
-
     public void eliminarJugador(Jugador jugador) {
+
         jugadores.remove(jugador);
 
     }
@@ -182,13 +196,8 @@ public class Equipo implements TieneId {
 
     public void setNombre(String nombre) {this.nombre = nombre;}
 
-    public Jugador getJugadorPorId(int id) {
-        for (Jugador jugador : jugadores) {
-            if (jugador.getId() == id) {
-                return jugador;
-            }
-        }
-        return null;
+    public Jugador getJugadorPorId(int id) throws RuntimeException {
+        return Utilidades.buscarPorIdEnLista(this.jugadores, id);
     }
 
 }
