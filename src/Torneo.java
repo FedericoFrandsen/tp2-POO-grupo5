@@ -108,11 +108,11 @@ public class Torneo {
 
         for (Gol gol : golesTotales) {
             goleadores.putIfAbsent(gol.getGoleador().getId(), 1);
-            goleadores.computeIfPresent(gol.getGoleador().getId(), (_,value) -> value + 1);
+            goleadores.computeIfPresent(gol.getGoleador().getId(), (key,value) -> value + 1);
 
             if (gol.getAsistidor() != null) {
                 asistidores.putIfAbsent(gol.getAsistidor().getId(), 1);
-                asistidores.computeIfPresent(gol.getAsistidor().getId(), (_,value) -> value + 1);
+                asistidores.computeIfPresent(gol.getAsistidor().getId(), (key,value) -> value + 1);
             }
         }
 
@@ -129,9 +129,9 @@ public class Torneo {
         }
 
 
-        System.out.println(maximoGoleadorId);
+       /* System.out.println(maximoGoleadorId);
         System.out.println(maximoAsistidorId);
-
+*/
 
         for (Equipo equipo : this.equipos) {
             equipo.incrementarTorneosJugados();
@@ -142,7 +142,7 @@ public class Torneo {
                     this.maximoGoleador = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoGoleadorId);
                     this.maximoAsistidor = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoAsistidorId);
 
-                } catch (RuntimeException _) {
+                } catch (RuntimeException key) {
                     System.out.println("Catch aca en finalizar torneo.");
                 }
             }
