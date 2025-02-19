@@ -3,10 +3,21 @@ import java.io.*;
 import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.stream.Stream;
 
 public class Utilidades {
+
+    public static final String ANSI_GREEN = "\u001B[32m";
+    public static final String ANSI_RESET = "\u001B[0m";
+    public static final String ANSI_RED = "\u001B[31m";
+    public static final String ANSI_YELLOW = "\u001B[33m";
+    public static final String ANSI_BLUE = "\u001B[34m";
+    public static final String ANSI_PURPLE = "\u001B[35m";
+    public static final String ANSI_BLACK = "\u001B[30m";
+    public static final String ANSI_GREEN_BACKGROUND = "\u001B[42m";
+
 
     private static final Random random = new Random();
 
@@ -17,7 +28,7 @@ public class Utilidades {
      * @param <T>   Cualquier clase que implemente la interfaz `TieneId`.
      * @return int: ID no repetido en la lista pasada como argumento.
      */
-    public static <T extends TieneId> int generarIdUnicaEn(ArrayList<T> lista) {
+    public static <T extends TieneId> int generarIdUnicaEn(List<T> lista) {
         // T es un parametro generico de Tipo, es decir establece condiciones para el tipo de dato que se puede recibir,
         // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz TieneId. Y como el parametro que pedimos es un
         // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente TieneId.
@@ -31,6 +42,16 @@ public class Utilidades {
     }
 
     /**
+     * Funcion de utilidad para agregar color al texto a ser impreso por consola.
+     * @param texto texto a imprimir
+     * @param color color a agregar
+     * @return String con el color agregado.
+     */
+    public static String agregarColor(String texto, String color) {
+        return color + texto + ANSI_RESET;
+    }
+
+    /**
      * Busca un objeto en una lista por su ID.
      *
      * @param lista Lista de objetos que implementan la interfaz `TieneId`
@@ -39,7 +60,7 @@ public class Utilidades {
      * @return Objeto de la lista con el ID pasado como parametro.
      * @throws RuntimeException en caso de que no se encuentre el objeto con el ID pasado como parametro.
      */
-    public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) throws RuntimeException {
+    public static <T extends TieneId> T buscarPorIdEnLista(List<T> lista, int id) throws RuntimeException {
         T encontrado = null;
         for (T elemento : lista) {
             if (elemento.getId() == id) {
@@ -93,7 +114,14 @@ public class Utilidades {
         ArrayList<String> lines = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(archivo))) {
             String line;
+            // aca estamos asignando a la variable `line` el valor de la siguiente línea del archivo.
+            // y al mismo tiempo nos fijamos que no sea null, permitiendo iterar por todas las líneas no nulas del archivo.
             while ((line = reader.readLine()) != null) {
+                if(line.trim().isEmpty()) {
+                    // si la línea esta vacia no la agregamos a la lista porque va a generar errores en el codigo.
+                    continue;
+                }
+
                 lines.add(line);
             }
             return lines;
@@ -139,5 +167,9 @@ public class Utilidades {
         }
 
         return atributosMap;
+    }
+
+    public static <T> T seleccionarRandomEnLista(List<T> lista) {
+        return lista.get(random.nextInt(lista.size()));
     }
 }

@@ -45,7 +45,7 @@ public class OrganizadorDePartidos {
             Equipo equipo2 = this.seleccionarEquipoRandom();
 
             //  Creamos el partido y lo agregamos a la lista de partidos
-            Partido partido = new Partido(equipo1, equipo2);
+            Partido partido = new Partido(equipo1, equipo2, Utilidades.seleccionarRandomEnLista(torneo.getArbitros()));
             partidosPendientes.add(partido);
         }
 

@@ -1,5 +1,5 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.image.AreaAveragingScaleFilter;
+import java.util.*;
 
 public class Torneo {
     private String nombre;
@@ -8,6 +8,7 @@ public class Torneo {
     private Equipo equipoGanador = null;
     private Jugador maximoGoleador;
     private Jugador maximoAsistidor;
+    private ArrayList<Arbitro> arbitros = new ArrayList<>();
 
     public Torneo(String nombre) {
         this.nombre = nombre;
@@ -67,7 +68,7 @@ public class Torneo {
 
         } else {
 
-            torneoStringBuilder.append(maximoAsistidor.toFileString()).append(" ").append(maximoAsistidor.getApellido());
+            torneoStringBuilder.append(maximoAsistidor.getNombre()).append(" ").append(maximoAsistidor.getApellido());
 
         }
 
@@ -92,35 +93,57 @@ public class Torneo {
     public void finalizarTorneo() {
         ArrayList<Partido> partidosJugados = this.organizadorDePartidos.getPartidosJugados();
 
+        ArrayList<Gol> golesTotales = new ArrayList<>();
+
         for (Partido partido : partidosJugados) {
-            for (Gol gol : partido.getGolesLocal()) {
-                if (maximoGoleador == null || gol.getGoleador().getGoles() > maximoGoleador.getGoles()) {
-                    maximoGoleador = gol.getGoleador();
-                }
-            }
-            for (Gol gol : partido.getGolesVisitante()) {
-                if (maximoGoleador == null || gol.getGoleador().getGoles() > maximoGoleador.getGoles()) {
-                    maximoGoleador = gol.getGoleador();
-                }
+            golesTotales.addAll( partido.getGolesTotales());
+        }
+
+        HashMap<Integer,Integer> goleadores = new HashMap<>();
+        HashMap<Integer,Integer> asistidores = new HashMap<>();
+
+        for (Gol gol : golesTotales) {
+            goleadores.putIfAbsent(gol.getGoleador().getId(), 1);
+            goleadores.computeIfPresent(gol.getGoleador().getId(), (k,v) -> v + 1);
+
+            if (gol.getAsistidor() != null) {
+                asistidores.putIfAbsent(gol.getAsistidor().getId(), 1);
+                asistidores.computeIfPresent(gol.getAsistidor().getId(), (k,v) -> v + 1);
             }
         }
 
-        for (Partido partido : partidosJugados) {
-            for (Gol gol : partido.getGolesLocal()) {
-                if (maximoAsistidor == null || gol.getAsistidor().getAsistencias() > maximoAsistidor.getAsistencias()) {
-                    maximoAsistidor = gol.getAsistidor();
-                }
-            }
-            for (Gol gol : partido.getGolesVisitante()) {
-                if (maximoAsistidor == null || gol.getAsistidor().getAsistencias() > maximoAsistidor.getAsistencias()) {
-                    maximoAsistidor = gol.getAsistidor();
-                }
-            }
+        if (goleadores.isEmpty()) {
+            this.maximoGoleador = null;
+            this.maximoAsistidor = null;
+        } else if (asistidores.isEmpty()) {
+            this.maximoAsistidor = null;
         }
+
+        System.out.println(goleadores);
+        System.out.println(asistidores);
+        // Buscamos el valor más alto guardado en cada HashMap.
+        int maximoGoleadorId = Collections.max(goleadores.entrySet(), Map.Entry.comparingByValue()).getKey();
+        int maximoAsistidorId = Collections.max(asistidores.entrySet(), Map.Entry.comparingByValue()).getKey();
+
+        System.out.println(maximoGoleadorId);
+        System.out.println(maximoAsistidorId);
+
 
         for (Equipo equipo : this.equipos) {
             equipo.incrementarTorneosJugados();
+
+            if (!goleadores.isEmpty()) {
+                try {
+
+                    this.maximoGoleador = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoGoleadorId);
+                    this.maximoAsistidor = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoAsistidorId);
+
+                } catch (RuntimeException _) {
+
+                }
+            }
         }
+
 
         this.equipoGanador = this.organizadorDePartidos.getEquiposParaSortear().getFirst();
 
@@ -174,5 +197,12 @@ public class Torneo {
         return equipos;
     }
 
+    public ArrayList<Arbitro> getArbitros() {
+        return arbitros;
+    }
+
+    public void setArbitros(ArrayList<Arbitro> arbitros) {
+        this.arbitros = arbitros;
+    }
 }
 

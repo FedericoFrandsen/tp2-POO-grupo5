@@ -4,33 +4,56 @@ import java.util.List;
 /**
  * Clase que representa un partido entre dos equipos, guarda la siguiente información:
  *  Los equipos que participan y los goles realizados en el partido.
- *  ¿El ganador del partido?
- *
  */
 public class Partido {
     private final Equipo equipoLocal;
     private final Equipo equipoVisitante;
-    private List<Gol> golesVisitante;
-    private List<Gol> golesLocal;
+    private Arbitro arbitro;
+    private List<Gol> golesVisitante = new ArrayList<>();
+    private List<Gol> golesLocal = new ArrayList<>();
 
 
 
-    public Partido(Equipo equipoLocal, Equipo equipoVisitante) {
+    public Partido(Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro) {
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;
-        this.golesLocal = new ArrayList<>();
-        this.golesVisitante = new ArrayList<>();
+        this.arbitro = arbitro;
+
     }
 
+    /**
+     * Método que agrega un gol al equipo local
+     * @param goleador Jugador que realizó el gol
+     * @param asistidor Jugador que realizó la asistencia
+     */
     public void agregarGolLocal(Jugador goleador, Jugador asistidor) {
-        golesLocal.add(new Gol(goleador, asistidor));
+        golesLocal.add(new Gol(goleador, asistidor, this.equipoLocal));
         goleador.incrementarGoles();
         asistidor.incrementarAsistencias();
-        }
+
+        this.equipoLocal.incrementarGolesMarcados();
+        this.equipoVisitante.incrementarGolesRecibidos();
+    }
+
+    /**
+     * Método que agrega un gol al equipo visitante
+     * @param goleador Jugador que realizó el gol
+     * @param asistidor Jugador que realizó la asistencia
+     */
     public void agregarGolVisitante(Jugador goleador, Jugador asistidor) {
-        golesVisitante.add(new Gol(goleador, asistidor));
+        golesVisitante.add(new Gol(goleador, asistidor, this.equipoVisitante));
+        // Incrementamos en 1 los datos de los jugadores y los equipos
         goleador.incrementarGoles();
         asistidor.incrementarAsistencias();
+        this.equipoVisitante.incrementarGolesMarcados();
+        this.equipoLocal.incrementarGolesRecibidos();
+    }
+
+    public List<Gol> getGolesTotales() {
+        List<Gol> goles = new ArrayList<>();
+        goles.addAll(golesLocal);
+        goles.addAll(golesVisitante);
+        return goles;
     }
 
     public List<Gol> getGolesLocal() {return golesLocal;}
@@ -59,6 +82,14 @@ public class Partido {
         } else {
             return equipoLocal;  // En caso de empate, gana el equipo local
         }
+    }
+
+    public Arbitro getArbitro() {
+        return arbitro;
+    }
+
+    public void setArbitro(Arbitro arbitro) {
+        this.arbitro = arbitro;
     }
 }
 

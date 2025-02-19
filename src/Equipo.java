@@ -131,7 +131,7 @@ public class Equipo implements TieneId {
     public String formacion() {
         StringBuilder formacion = new StringBuilder();
         formacion.append("============================================\n");
-        formacion.append(String.format("Formación de %s:\n", nombre));
+        formacion.append(String.format("Formación de " + Utilidades.agregarColor("%s\n", Utilidades.ANSI_PURPLE), nombre));
         formacion.append(String.format("%-20s %-20s\n", "Nombre", "Apellido"));
         formacion.append(String.format("%-20s %-20s\n", "--------------------", "--------------------"));
         for (Jugador jugador : jugadores) {
@@ -165,6 +165,13 @@ public class Equipo implements TieneId {
         this.golesRecibidos = golesRecibidos;
     }
 
+    public void incrementarGolesMarcados() {
+        this.golesMarcados++;
+    }
+
+    public void incrementarGolesRecibidos() {
+        this.golesRecibidos++;
+    }
 
     public int getId() {
         return id;
