@@ -408,6 +408,11 @@ public class Main {
     private static void verHistorialDeTorneos() {
         try {
             ArrayList<String> lineas = Utilidades.leerArchivo("./torneos.txt");
+            if(lineas.isEmpty()) {
+                System.out.println(Utilidades.agregarColor("Aun no se jugaron torneos.", Utilidades.ANSI_PURPLE));
+                return;
+            }
+
             for (String line : lineas) {
 
                 HashMap<String, String> torneoMap = Utilidades.stringToMap(line);
