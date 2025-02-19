@@ -558,6 +558,8 @@ public class Main {
 
             frame.setVisible(true);
 
+            frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
             torneo.guardarEnArchivo();
 
             StringBuilder jugadoresActualizados = new StringBuilder();
