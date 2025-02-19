@@ -1,10 +1,9 @@
-import java.awt.image.AreaAveragingScaleFilter;
 import java.util.*;
 
 public class Torneo {
-    private String nombre;
-    private OrganizadorDePartidos organizadorDePartidos;
-    private ArrayList<Equipo> equipos = new ArrayList<>();
+    private final String nombre;
+    private final OrganizadorDePartidos organizadorDePartidos;
+    private final ArrayList<Equipo> equipos = new ArrayList<>();
     private Equipo equipoGanador = null;
     private Jugador maximoGoleador;
     private Jugador maximoAsistidor;
@@ -37,7 +36,7 @@ public class Torneo {
         if (equipos.size() == 8) {
             // aca hacemos una copia de la lista porque el organizador de partidos la va a modificar
             // y no queremos que se modifique la lista original
-            // el (ArrayList<Equipo>) es un cast, porque el metodo .clone() devuelve un tipo Object
+            // el (ArrayList<Equipo>) es un cast, porque el método .clone() devuelve un tipo Object
             organizadorDePartidos.setEquiposParaSortear((ArrayList<Equipo>) equipos.clone());
 
         } else {
@@ -109,11 +108,11 @@ public class Torneo {
 
         for (Gol gol : golesTotales) {
             goleadores.putIfAbsent(gol.getGoleador().getId(), 1);
-            goleadores.computeIfPresent(gol.getGoleador().getId(), (k,v) -> v + 1);
+            goleadores.computeIfPresent(gol.getGoleador().getId(), (_,value) -> value + 1);
 
             if (gol.getAsistidor() != null) {
                 asistidores.putIfAbsent(gol.getAsistidor().getId(), 1);
-                asistidores.computeIfPresent(gol.getAsistidor().getId(), (k,v) -> v + 1);
+                asistidores.computeIfPresent(gol.getAsistidor().getId(), (_,value) -> value + 1);
             }
         }
 
