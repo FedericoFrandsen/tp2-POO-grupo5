@@ -129,6 +129,9 @@ public class Main {
 
     private static void mostrarEquipos() {
         System.out.println("Equipos:");
+        if (equipos.isEmpty()) {
+            System.out.println("Aun no hay equipos registrados.");
+        }
         for (Equipo equipo : equipos) {
             System.out.println(equipo.formacion());
             System.out.println("Historial del equipo:");
@@ -343,6 +346,11 @@ public class Main {
         System.out.println("+-------------------------------------------------------------+");
         System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n", "ID", "Apellido", "Nombre", "Goles", "Asist.");
         System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n", "=======", "=======", "========", "========", "========");
+        if(jugadores.isEmpty()) {
+            System.out.println("| No hay jugadores para mostrar.                             |");
+            System.out.println("+-------------------------------------------------------------+");
+            return;
+        }
         for (Jugador jugador : jugadores) {
             System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n",  jugador.getId(), jugador.getApellido(), jugador.getNombre(),jugador.getGoles(), jugador.getAsistencias() );
         }
