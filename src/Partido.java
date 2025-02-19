@@ -9,8 +9,8 @@ public class Partido {
     private final Equipo equipoLocal;
     private final Equipo equipoVisitante;
     private Arbitro arbitro;
-    private List<Gol> golesVisitante = new ArrayList<>();
-    private List<Gol> golesLocal = new ArrayList<>();
+    private ArrayList<Gol> golesVisitante = new ArrayList<>();
+    private ArrayList<Gol> golesLocal = new ArrayList<>();
 
     public Partido(Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro) {
         this.equipoLocal = equipoLocal;
@@ -47,15 +47,19 @@ public class Partido {
         this.equipoLocal.incrementarGolesRecibidos();
     }
 
-    public List<Gol> getGolesTotales() {
-        List<Gol> goles = new ArrayList<>();
+    /**
+     * Método que devuelve todos los goles realizados en el partido
+     * @return ArrayList<Gol></Gol>
+     */
+    public ArrayList<Gol> getGolesTotales() {
+        ArrayList<Gol> goles = new ArrayList<>();
         goles.addAll(golesLocal);
         goles.addAll(golesVisitante);
         return goles;
     }
 
-    public List<Gol> getGolesLocal() {return golesLocal;}
-    public List<Gol> getGolesVisitante() {return golesVisitante;}
+    public ArrayList<Gol> getGolesLocal() {return golesLocal;}
+    public ArrayList<Gol> getGolesVisitante() {return golesVisitante;}
 
     public Equipo getEquipoLocal() {
         return equipoLocal;

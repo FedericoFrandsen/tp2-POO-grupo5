@@ -1,10 +1,9 @@
-public class Persona {
+public abstract class Persona {
 
-    public String nombre;
-    public String apellido;
-    public int edad;
+    private String nombre;
+    private String apellido;
+    private int edad;
 
-    // constructor
 
     public Persona(String nombre, String apellido, int edad) {
         this.nombre = nombre;
@@ -12,7 +11,6 @@ public class Persona {
         this.edad = edad;
     }
 
-//get set
 
     public String getNombre() {
         return nombre;

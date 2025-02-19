@@ -1,5 +1,5 @@
 public class Arbitro extends Persona {
-    public int partidosDirigidos;
+    private int partidosDirigidos;
 
 
     public Arbitro(String nombre, String apellido, int edad, int partidosDirigidos) {

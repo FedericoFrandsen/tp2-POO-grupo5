@@ -145,7 +145,7 @@ public class Equipo implements TieneId {
         return nombre;
     }
 
-    public List<Jugador> getJugadores() {
+    public ArrayList<Jugador> getJugadores() {
         return jugadores;
     }
 

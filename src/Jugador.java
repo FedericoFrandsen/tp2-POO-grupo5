@@ -1,6 +1,3 @@
-import java.util.HashMap;
-
-
 public class Jugador extends Persona implements TieneId {
 
     private int goles = 0;
@@ -19,10 +16,6 @@ public class Jugador extends Persona implements TieneId {
         this.goles = goles;
         this.asistencias = asistencias;
     }
-
-
-
-
 
     /**
      * Devuelve un objeto Jugador a partir de un String con un formato específico -> "[nombreDelAtributo]:[valorDelAtributo];"
@@ -90,7 +83,6 @@ public class Jugador extends Persona implements TieneId {
     public int getId() {
         return id;
     }
-
 
     public int getGoles() {
         return goles;

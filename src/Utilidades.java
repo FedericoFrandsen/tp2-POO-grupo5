@@ -1,11 +1,8 @@
 
 import java.io.*;
-import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Random;
-import java.util.stream.Stream;
 
 public class Utilidades {
 
@@ -28,10 +25,11 @@ public class Utilidades {
      * @param <T>   Cualquier clase que implemente la interfaz `TieneId`.
      * @return int: ID no repetido en la lista pasada como argumento.
      */
-    public static <T extends TieneId> int generarIdUnicaEn(List<T> lista) {
+    public static <T extends TieneId> int generarIdUnicaEn(ArrayList<T> lista) {
         // T es un parametro generico de Tipo, es decir establece condiciones para el tipo de dato que se puede recibir,
         // en este caso estamos diciendo que T debe ser una clase que implemente la interfaz TieneId. Y como el parametro que pedimos es un
         // ArrayList<T> quiere decir que aceptamos una lista de cualquier clase que implemente TieneId.
+
         do {
             int newId = random.nextInt(1000);
             // revisamos que ninguno de los objetos presentes en la lista tenga el ID creado.
@@ -39,16 +37,6 @@ public class Utilidades {
                 return newId;
             }
         } while (true);
-    }
-
-    /**
-     * Funcion de utilidad para agregar color al texto a ser impreso por consola.
-     * @param texto texto a imprimir
-     * @param color color a agregar
-     * @return String con el color agregado.
-     */
-    public static String agregarColor(String texto, String color) {
-        return color + texto + ANSI_RESET;
     }
 
     /**
@@ -60,7 +48,7 @@ public class Utilidades {
      * @return Objeto de la lista con el ID pasado como parametro.
      * @throws RuntimeException en caso de que no se encuentre el objeto con el ID pasado como parametro.
      */
-    public static <T extends TieneId> T buscarPorIdEnLista(List<T> lista, int id) throws RuntimeException {
+    public static <T extends TieneId> T buscarPorIdEnLista(ArrayList<T> lista, int id) throws RuntimeException {
         T encontrado = null;
         for (T elemento : lista) {
             if (elemento.getId() == id) {
@@ -76,6 +64,15 @@ public class Utilidades {
         return encontrado;
     }
 
+    /**
+     * Funcion de utilidad para agregar color al texto a ser impreso por consola.
+     * @param texto texto a imprimir
+     * @param color color a agregar
+     * @return String con el color agregado.
+     */
+    public static String agregarColor(String texto, String color) {
+        return color + texto + ANSI_RESET;
+    }
 
     /**
      * Escribe un archivo con el contenido pasado como parametro. (Siempre sobreescribe el contenido anterior)
@@ -169,7 +166,7 @@ public class Utilidades {
         return atributosMap;
     }
 
-    public static <T> T seleccionarRandomEnLista(List<T> lista) {
+    public static <T> T seleccionarRandomEnLista(ArrayList<T> lista) {
         return lista.get(random.nextInt(lista.size()));
     }
 }

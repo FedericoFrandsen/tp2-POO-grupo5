@@ -46,7 +46,6 @@ public class Torneo {
         }
     }
 
-
     public String toFileString() {
         if (equipoGanador == null) {
             throw new RuntimeException("El torneo no ha finalizado, no se puede guardar en archivo.");
@@ -156,11 +155,9 @@ public class Torneo {
         this.equipoGanador.incrementarTorneosGanados();
     }
 
-
     public void guardarEnArchivo() {
         Utilidades.escribirArchivo("torneos.txt", this.toFileString(), true);
     }
-
 
     public Jugador obtenerMaximoGoleador() {
 
@@ -178,10 +175,6 @@ public class Torneo {
         return this.equipoGanador;
     }
 
-    public OrganizadorDePartidos getOrganizadorDePartidos() {
-        return organizadorDePartidos;
-    }
-
     public void setEquipoGanador(Equipo equipoGanador) throws RuntimeException {
         if (this.organizadorDePartidos.hayPartidosPendientes()) {
             throw new RuntimeException("No se puede definir un equipo ganador si hay partidos pendientes.");
@@ -189,6 +182,10 @@ public class Torneo {
         }
 
         this.equipoGanador = equipoGanador;
+    }
+
+    public OrganizadorDePartidos getOrganizadorDePartidos() {
+        return organizadorDePartidos;
     }
 
     public String getNombre() {
@@ -199,7 +196,7 @@ public class Torneo {
         return equipos.size();
     }
 
-    public List<Equipo> getEquipos() {
+    public ArrayList<Equipo> getEquipos() {
         return equipos;
     }
 

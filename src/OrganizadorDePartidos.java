@@ -11,7 +11,6 @@ public class OrganizadorDePartidos {
     private ArrayList<Partido> partidosJugados = new ArrayList<>();
     private ArrayList<Equipo> equiposParaSortear = null;
     private Torneo torneo;
-    private final Random generator = new Random();
 
     public OrganizadorDePartidos(Torneo torneo) {
         this.torneo = torneo;
@@ -128,8 +127,9 @@ public class OrganizadorDePartidos {
      * @return equipo seleccionado al azar.
      */
     private Equipo seleccionarEquipoRandom() {
-        int index = generator.nextInt(equiposParaSortear.size());
-        return equiposParaSortear.remove(index);
+        Equipo equipo = Utilidades.seleccionarRandomEnLista(equiposParaSortear);
+        equiposParaSortear.remove(equipo);
+        return equipo;
     }
 
 }
