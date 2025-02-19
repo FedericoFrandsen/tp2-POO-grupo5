@@ -16,4 +16,8 @@ public class Arbitro extends Persona{
         this.partidosDirigidos = partidosDirigidos;
     }
 
+    public void incrementarPartidosDirigidos() {
+        this.partidosDirigidos++;
+    }
+
 }

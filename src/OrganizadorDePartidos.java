@@ -45,7 +45,10 @@ public class OrganizadorDePartidos {
             Equipo equipo2 = this.seleccionarEquipoRandom();
 
             //  Creamos el partido y lo agregamos a la lista de partidos
-            Partido partido = new Partido(equipo1, equipo2, Utilidades.seleccionarRandomEnLista(torneo.getArbitros()));
+            Arbitro arbitro = Utilidades.seleccionarRandomEnLista(torneo.getArbitros());
+
+            Partido partido = new Partido(equipo1, equipo2, arbitro);
+
             partidosPendientes.add(partido);
         }
 
@@ -98,6 +101,7 @@ public class OrganizadorDePartidos {
      */
     public void finalizarPartidoActual(Equipo ganador) {
 
+        this.partidoActual.getArbitro().incrementarPartidosDirigidos();
         this.equiposParaSortear.add(ganador);
         this.partidosJugados.add(this.partidoActual);
         this.partidoActual = null;
