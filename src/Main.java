@@ -14,7 +14,7 @@ public class Main {
     private static ArrayList<Equipo> equipos = new ArrayList<>();
     private static ArrayList<Jugador> jugadores = new ArrayList<>();
 
-    public static void main(String[] args) throws InterruptedException {
+    public static void main(String[] args) {
         try {
             // En este bloque de codigo cargamos los jugadores guardados en un archivo en memoria para poder acceder a ellos.
             ArrayList<String> lineasJugadores = Utilidades.leerArchivo("./jugadores.txt");
@@ -373,7 +373,7 @@ public class Main {
         Utilidades.escribirArchivo("./jugadores.txt", nuevoJugador.toFileString(), true);
     }
 
-    private static void administrarTorneos(Scanner scanner) throws InterruptedException {
+    private static void administrarTorneos(Scanner scanner) {
 
         boolean continuar = true;
 
@@ -434,7 +434,7 @@ public class Main {
         }
     }
 
-    private static void empezarNuevoTorneo(Scanner scanner) throws InterruptedException {
+    private static void empezarNuevoTorneo(Scanner scanner) {
 
         System.out.println("Ingrese el nombre del torneo:");
         String nombre = scanner.nextLine();
