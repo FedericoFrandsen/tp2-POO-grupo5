@@ -137,7 +137,7 @@ public class Equipo implements TieneId {
         for (Jugador jugador : jugadores) {
             formacion.append(String.format("%-20s %-20s\n", jugador.getNombre(), jugador.getApellido()));
         }
-        formacion.append("============================================\n");
+        formacion.append("--------------------------------------------\n");
         return formacion.toString();
     }
 

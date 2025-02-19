@@ -1,5 +1,8 @@
+import javax.swing.*;
 import javax.swing.event.MouseInputListener;
+import javax.swing.text.JTextComponent;
 import java.io.*;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Scanner;
@@ -40,6 +43,7 @@ public class Main {
             throw new RuntimeException(e);
 
         }
+
 
 
         System.out.println(Utilidades.agregarColor("+--------------------------------------------+\n| Bienvenido al sistema de torneos de fútbol |\n+--------------------------------------------+", Utilidades.ANSI_BLUE));
@@ -337,10 +341,10 @@ public class Main {
         System.out.println("+-------------------------------------------------------------+");
         System.out.println("|                 Lista de Jugadores                          |");
         System.out.println("+-------------------------------------------------------------+");
-        System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n", "ID", "Apellido", "Nombre", "Asist.", "Goles");
+        System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n", "ID", "Apellido", "Nombre", "Goles", "Asist.");
         System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n", "=======", "=======", "========", "========", "========");
         for (Jugador jugador : jugadores) {
-            System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n",  jugador.getId(), jugador.getApellido(), jugador.getNombre(), jugador.getAsistencias(), jugador.getGoles());
+            System.out.printf("|%-10s | %-10s |%-10s | %-10s |%-10s |%n",  jugador.getId(), jugador.getApellido(), jugador.getNombre(),jugador.getGoles(), jugador.getAsistencias() );
         }
         System.out.println("+-------------------------------------------------------------+");
     }
@@ -411,11 +415,12 @@ public class Main {
                 try {
                     Equipo equipoGanador = Utilidades.buscarPorIdEnLista(equipos, Integer.parseInt(torneoMap.get("equipoGanadorId")));
 
-                    System.out.println("Nombre del torneo: " + torneoMap.get("nombre"));
-                    System.out.println("Equipo ganador: " + equipoGanador.getNombre());
+                    System.out.println("============================================");
+                    System.out.println("Nombre del torneo: " + Utilidades.agregarColor(torneoMap.get("nombre"), Utilidades.ANSI_PURPLE));
+                    System.out.println("Equipo ganador: " + Utilidades.agregarColor(equipoGanador.getNombre(), Utilidades.ANSI_BLUE));
                     System.out.println("Máximo goleador: " + torneoMap.get("maximoGoleador"));
                     System.out.println("Máximo asistidor: " + torneoMap.get("maximoAsistidor"));
-                    System.out.println();
+                    System.out.println("============================================\n");
 
                 } catch (RuntimeException e) {
                     System.out.println(Utilidades.agregarColor("No se encontro el equipo ganador: " + torneoMap.get("equipoGanadorId"), Utilidades.ANSI_RED));
@@ -510,80 +515,8 @@ public class Main {
 
                     switch (opcion) {
                         case 1:
-                            System.out.println("¿Que equipo hizo el gol?\n");
-                            System.out.println("1) " + partido.getEquipoLocal().getNombre());
-                            System.out.println("2) " + partido.getEquipoVisitante().getNombre());
-                            int equipoQueHizoElGol = scanner.nextInt();
-                            Jugador goleador = null;
-                            Jugador asistidor = null;
-                            if (equipoQueHizoElGol == 1) {
-                                System.out.println("¿Quién hizo el gol? ");
-                                System.out.println("Jugadores: \n");
 
-                                for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
-                                    System.out.println(jugador.getId() + " - "+ jugador.getNombre() + " " + jugador.getApellido());
-                                }
-
-                                while (goleador == null) {
-                                    int idJugadorGoleador = scanner.nextInt();
-
-                                    try {
-                                        goleador = partido.getEquipoLocal().getJugadorPorId(idJugadorGoleador);
-                                    } catch (RuntimeException e) {
-                                        System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
-                                    }
-
-                                }
-                                System.out.println("¿Quién asistio en el gol?");
-                                System.out.println("Jugadores: \n");
-                                for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
-                                    System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
-                                }
-                                while (asistidor == null) {
-                                    int idJugadorAsistidor = scanner.nextInt();
-                                    try {
-                                        asistidor = partido.getEquipoLocal().getJugadorPorId(idJugadorAsistidor);
-                                    } catch (RuntimeException e) {
-                                        System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
-                                    }
-
-                                }
-                                partido.agregarGolLocal(goleador, asistidor);
-
-                            } else if (equipoQueHizoElGol == 2) {
-                                System.out.println("¿Quién hizo el gol?");
-                                System.out.println("Jugadores: \n");
-                                for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
-                                    System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
-                                }
-                                while (goleador == null) {
-                                    int idJugadorGoleador = scanner.nextInt();
-                                    try {
-                                        goleador = partido.getEquipoVisitante().getJugadorPorId(idJugadorGoleador);
-                                    } catch (RuntimeException e) {
-                                        System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
-                                    }
-
-                                }
-
-                                System.out.println("¿Quién asistio en el gol?");
-                                System.out.println("Jugadores: \n");
-                                for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
-                                    System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
-                                }
-                                while (asistidor == null) {
-                                    int idJugadorAsistidor = scanner.nextInt();
-                                    try {
-                                        asistidor = partido.getEquipoVisitante().getJugadorPorId(idJugadorAsistidor);
-                                    } catch (RuntimeException e) {
-                                        System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
-                                    }
-
-                                }
-                                partido.agregarGolVisitante(goleador, asistidor);
-                            } else {
-                                System.out.println(Utilidades.agregarColor("Opción no válida", Utilidades.ANSI_RED));
-                            }
+                            agregarGolAPartido(scanner, partido);
                             break;
                         case 2:
                             Equipo ganador = partido.determinarGanador();
@@ -608,11 +541,28 @@ public class Main {
             System.out.println("Torneo finalizado");
             System.out.println("Equipo ganador: " + Utilidades.agregarColor( torneo.getEquipoGanador().getNombre(), Utilidades.ANSI_GREEN_BACKGROUND + Utilidades.ANSI_BLACK));
 
+            JFrame frame = new JFrame("Finalizo el torneo.");
+
+            JButton button = new JButton("Ver ganador del torneo");
+            button.setBounds(100, 100, 250, 30);
+
+            button.addActionListener(e -> {
+                JOptionPane.showMessageDialog(frame, "El ganador del torneo es: " + torneo.getEquipoGanador().getNombre());
+            });
+
+            frame.add(button);
+
+            frame.setSize(400, 400);
+
+            frame.setLayout(null);
+
+            frame.setVisible(true);
 
             torneo.guardarEnArchivo();
 
             StringBuilder jugadoresActualizados = new StringBuilder();
 
+            // aca actualizamos los datos de los jugadores.
             for (Jugador jugador : jugadores) {
                 jugadoresActualizados.append(jugador.toFileString());
             }
@@ -621,7 +571,7 @@ public class Main {
 
 
             StringBuilder equiposActualizados = new StringBuilder();
-
+            // aca actualizamos los datos de los equipos.
             for (Equipo equipo : equipos) {
                 equiposActualizados.append(equipo.toFileString());
             }
@@ -634,6 +584,84 @@ public class Main {
 
         }
 
+
+    }
+
+    private static void agregarGolAPartido(Scanner scanner, Partido partido) {
+        System.out.println("¿Que equipo hizo el gol?\n");
+        System.out.println("1) " + partido.getEquipoLocal().getNombre());
+        System.out.println("2) " + partido.getEquipoVisitante().getNombre());
+        int equipoQueHizoElGol = scanner.nextInt();
+        Jugador goleador = null;
+        Jugador asistidor = null;
+        if (equipoQueHizoElGol == 1) {
+            System.out.println("¿Quién hizo el gol? ");
+            System.out.println("Jugadores: \n");
+
+            for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
+                System.out.println(jugador.getId() + " - "+ jugador.getNombre() + " " + jugador.getApellido());
+            }
+
+            while (goleador == null) {
+                int idJugadorGoleador = scanner.nextInt();
+
+                try {
+                    goleador = partido.getEquipoLocal().getJugadorPorId(idJugadorGoleador);
+                } catch (RuntimeException e) {
+                    System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
+                }
+
+            }
+            System.out.println("¿Quién asistio en el gol?");
+            System.out.println("Jugadores: \n");
+            for (Jugador jugador : partido.getEquipoLocal().getJugadores()) {
+                System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
+            }
+            while (asistidor == null) {
+                int idJugadorAsistidor = scanner.nextInt();
+                try {
+                    asistidor = partido.getEquipoLocal().getJugadorPorId(idJugadorAsistidor);
+                } catch (RuntimeException e) {
+                    System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
+                }
+
+            }
+            partido.agregarGolLocal(goleador, asistidor);
+
+        } else if (equipoQueHizoElGol == 2) {
+            System.out.println("¿Quién hizo el gol?");
+            System.out.println("Jugadores: \n");
+            for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
+                System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
+            }
+            while (goleador == null) {
+                int idJugadorGoleador = scanner.nextInt();
+                try {
+                    goleador = partido.getEquipoVisitante().getJugadorPorId(idJugadorGoleador);
+                } catch (RuntimeException e) {
+                    System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
+                }
+
+            }
+
+            System.out.println("¿Quién asistio en el gol?");
+            System.out.println("Jugadores: \n");
+            for (Jugador jugador : partido.getEquipoVisitante().getJugadores()) {
+                System.out.println(jugador.getId() + " - " + jugador.getNombre() + " " + jugador.getApellido());
+            }
+            while (asistidor == null) {
+                int idJugadorAsistidor = scanner.nextInt();
+                try {
+                    asistidor = partido.getEquipoVisitante().getJugadorPorId(idJugadorAsistidor);
+                } catch (RuntimeException e) {
+                    System.out.println(Utilidades.agregarColor("ID de jugador no válido. Intente de nuevo.", Utilidades.ANSI_RED));
+                }
+
+            }
+            partido.agregarGolVisitante(goleador, asistidor);
+        } else {
+            System.out.println(Utilidades.agregarColor("Opción no válida", Utilidades.ANSI_RED));
+        }
 
     }
 

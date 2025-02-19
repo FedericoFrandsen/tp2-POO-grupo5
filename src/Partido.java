@@ -12,8 +12,6 @@ public class Partido {
     private List<Gol> golesVisitante = new ArrayList<>();
     private List<Gol> golesLocal = new ArrayList<>();
 
-
-
     public Partido(Equipo equipoLocal, Equipo equipoVisitante, Arbitro arbitro) {
         this.equipoLocal = equipoLocal;
         this.equipoVisitante = equipoVisitante;

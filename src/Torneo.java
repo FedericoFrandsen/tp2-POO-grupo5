@@ -13,6 +13,12 @@ public class Torneo {
     public Torneo(String nombre) {
         this.nombre = nombre;
         this.organizadorDePartidos = new OrganizadorDePartidos(this);
+
+
+        // Los arbitros por ahora quedan hardcodeados.
+        this.arbitros.add(new Arbitro("Juan", "Perez", 30, 0));
+        this.arbitros.add(new Arbitro("Pedro", "Gomez", 35, 0));
+        this.arbitros.add(new Arbitro("Carlos", "Rodriguez", 40, 0));
     }
 
     public void agregarEquipo(Equipo equipo) {
@@ -112,18 +118,18 @@ public class Torneo {
             }
         }
 
-        if (goleadores.isEmpty()) {
-            this.maximoGoleador = null;
-            this.maximoAsistidor = null;
-        } else if (asistidores.isEmpty()) {
-            this.maximoAsistidor = null;
+
+        int maximoGoleadorId = -1;
+        int maximoAsistidorId = -1;
+
+        if(!goleadores.isEmpty()) {
+            maximoGoleadorId = Collections.max(goleadores.entrySet(), Map.Entry.comparingByValue()).getKey();
         }
 
-        System.out.println(goleadores);
-        System.out.println(asistidores);
-        // Buscamos el valor más alto guardado en cada HashMap.
-        int maximoGoleadorId = Collections.max(goleadores.entrySet(), Map.Entry.comparingByValue()).getKey();
-        int maximoAsistidorId = Collections.max(asistidores.entrySet(), Map.Entry.comparingByValue()).getKey();
+        if (!asistidores.isEmpty()) {
+            maximoAsistidorId = Collections.max(asistidores.entrySet(), Map.Entry.comparingByValue()).getKey();
+        }
+
 
         System.out.println(maximoGoleadorId);
         System.out.println(maximoAsistidorId);
@@ -132,14 +138,14 @@ public class Torneo {
         for (Equipo equipo : this.equipos) {
             equipo.incrementarTorneosJugados();
 
-            if (!goleadores.isEmpty()) {
+            if (maximoGoleadorId != -1 && maximoAsistidorId != -1) {
                 try {
 
                     this.maximoGoleador = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoGoleadorId);
                     this.maximoAsistidor = Utilidades.buscarPorIdEnLista(equipo.getJugadores(), maximoAsistidorId);
 
                 } catch (RuntimeException _) {
-
+                    System.out.println("Catch aca en finalizar torneo.");
                 }
             }
         }
